@@ -48,13 +48,13 @@ namespace LibNoise.Renderer
         /// <summary>
         /// The position of this gradient point.
         /// </summary>
-        public float Position;
+        public double Position;
 
         #endregion
 
         #region Ctor/Dtor
 
-        public GradientPoint(float position, IColor color)
+        public GradientPoint(double position, IColor color)
         {
             Color = color;
             Position = position;

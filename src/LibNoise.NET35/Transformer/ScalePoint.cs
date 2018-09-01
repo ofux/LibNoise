@@ -33,17 +33,17 @@ namespace LibNoise.Transformer
         /// <summary>
         /// The default scaling factor applied to the x coordinate
         /// </summary>
-        public const float DEFAULT_POINT_X = 1.0f;
+        public const double DEFAULT_POINT_X = 1.0;
 
         /// <summary>
         /// The default scaling factor applied to the y coordinate
         /// </summary>
-        public const float DEFAULT_POINT_Y = 1.0f;
+        public const double DEFAULT_POINT_Y = 1.0;
 
         /// <summary>
         /// The default scaling factor applied to the z coordinate
         /// </summary>
-        public const float DEFAULT_POINT_Z = 1.0f;
+        public const double DEFAULT_POINT_Z = 1.0;
 
         #endregion
 
@@ -57,17 +57,17 @@ namespace LibNoise.Transformer
         /// <summary>
         /// the scaling factor applied to the x coordinate
         /// </summary>
-        protected float _xScale = DEFAULT_POINT_X;
+        protected double _xScale = DEFAULT_POINT_X;
 
         /// <summary>
         /// the scaling factor applied to the y coordinate
         /// </summary>
-        protected float _yScale = DEFAULT_POINT_Y;
+        protected double _yScale = DEFAULT_POINT_Y;
 
         /// <summary>
         /// the scaling factor applied to the z coordinate
         /// </summary>
-        protected float _zScale = DEFAULT_POINT_Z;
+        protected double _zScale = DEFAULT_POINT_Z;
 
         #endregion
 
@@ -85,7 +85,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the scaling factor applied to the x coordinate
         /// </summary>
-        public float XScale
+        public double XScale
         {
             get { return _xScale; }
             set { _xScale = value; }
@@ -94,7 +94,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the scaling factor applied to the y coordinate
         /// </summary>
-        public float YScale
+        public double YScale
         {
             get { return _yScale; }
             set { _yScale = value; }
@@ -103,7 +103,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the scaling factor applied to the z coordinate
         /// </summary>
-        public float ZScale
+        public double ZScale
         {
             get { return _zScale; }
             set { _zScale = value; }
@@ -134,7 +134,7 @@ namespace LibNoise.Transformer
         /// <param name="x">the scaling factor applied to the x coordinate</param>
         /// <param name="y">the scaling factor applied to the y coordinate</param>
         /// <param name="z">the scaling factor applied to the z coordinate</param>
-        public ScalePoint(IModule source, float x, float y, float z)
+        public ScalePoint(IModule source, double x, double y, double z)
             : this(source)
         {
             _xScale = x;
@@ -153,7 +153,7 @@ namespace LibNoise.Transformer
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             return ((IModule3D) _sourceModule).GetValue(x*_xScale, y*_yScale, z*_zScale);
         }

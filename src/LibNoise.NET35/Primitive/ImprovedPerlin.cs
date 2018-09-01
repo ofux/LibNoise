@@ -189,7 +189,7 @@ namespace LibNoise.Primitive
         /// </summary>
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x)
+        public double GetValue(double x)
         {
             // Fast floor
             int xf = (x > 0.0) ? (int) x : (int) x - 1;
@@ -201,7 +201,7 @@ namespace LibNoise.Primitive
             x -= xf;
 
             // Smooth the curve
-            float u = 0.0f;
+            double u = 0.0;
 
             switch (Quality)
             {
@@ -231,7 +231,7 @@ namespace LibNoise.Primitive
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
             // Fast floor
             int xf = (x > 0.0) ? (int) x : (int) x - 1;
@@ -246,7 +246,7 @@ namespace LibNoise.Primitive
             x -= yf;
 
             // Smooth the curve
-            float u = 0.0f, v = 0.0f;
+            double u = 0.0, v = 0.0;
 
             switch (Quality)
             {
@@ -297,7 +297,7 @@ namespace LibNoise.Primitive
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Fast floor
             int xf = (x > 0.0) ? (int) x : (int) x - 1;
@@ -316,7 +316,7 @@ namespace LibNoise.Primitive
             z -= zf;
 
             // Smooth the curve
-            float u = 0.0f, v = 0.0f, w = 0.0f;
+            double u = 0.0, v = 0.0, w = 0.0;
 
             switch (Quality)
             {
@@ -391,7 +391,7 @@ namespace LibNoise.Primitive
         /// <param name="y">The amount of the bias on the Y axis</param>
         /// <param name="z">The amount of the bias on the Z axis</param>
         /// <returns>The directional bias strength</returns>
-        private float Grad(int hash, float x, float y, float z)
+        private double Grad(int hash, double x, double y, double z)
         {
             /*
 			 * TODO Do this test to improve the method
@@ -405,8 +405,8 @@ namespace LibNoise.Primitive
 			 * I found it to be slightly faster (and easier) to simply put all the 
 			 * possible gradients in a table and do a dot product.
 			 * 
-			float gradientMagnitude(int hash, float x, float y, float z){
-				static float g3[16][3] ={
+			double gradientMagnitude(int hash, double x, double y, double z){
+				static double g3[16][3] ={
 					{ 1, 1, 0},{-1, 1, 0},{ 1,-1, 0},{-1,-1, 0}, // center of cube to edges
 					{ 1, 0, 1},{-1, 0, 1},{ 1, 0,-1},{-1, 0,-1},
 					{ 0, 1, 1},{ 0,-1, 1},{ 0, 1,-1},{ 0,-1,-1},
@@ -440,7 +440,7 @@ namespace LibNoise.Primitive
             // 14 | 1110 | y |  y
             // 15 | 1111 | y | -y
 
-            float u = h < 8 ? x : y;
+            double u = h < 8 ? x : y;
 
             // Result table for V
             // ---+------+---+------
@@ -461,7 +461,7 @@ namespace LibNoise.Primitive
             // 14 | 1110 | x | -x
             // 15 | 1111 | z | -z
 
-            float v = h < 4 ? y : h == 12 || h == 14 ? x : z;
+            double v = h < 4 ? y : h == 12 || h == 14 ? x : z;
 
             // Result table for U+V
             // ---+------+----+----+-------
@@ -497,7 +497,7 @@ namespace LibNoise.Primitive
         /// <param name="x">The amount of the bias on the X axis</param>
         /// <param name="y">The amount of the bias on the Y axis</param>
         /// <returns>The directional bias strength</returns>
-        private float Grad(int hash, float x, float y)
+        private double Grad(int hash, double x, double y)
         {
             // Fetch the last 3 bits
             int h = hash & 3;
@@ -509,7 +509,7 @@ namespace LibNoise.Primitive
             //  2 | 0010 | x | -x
             //  3 | 0011 | x | -x
 
-            float u = (h & 2) == 0 ? x : -x;
+            double u = (h & 2) == 0 ? x : -x;
 
             // Result table for V
             // ---+------+---+------
@@ -518,7 +518,7 @@ namespace LibNoise.Primitive
             //  2 | 0010 | y |  y
             //  3 | 0011 | y | -y
 
-            float v = (h & 1) == 0 ? y : -y;
+            double v = (h & 1) == 0 ? y : -y;
 
             // Result table for U + V
             // ---+------+----+----+--
@@ -536,7 +536,7 @@ namespace LibNoise.Primitive
         /// <param name="hash">The random value telling in which direction the bias will occur</param>
         /// <param name="x">The amount of the bias on the X axis</param>
         /// <returns>The directional bias strength</returns>
-        private float Grad(int hash, float x)
+        private double Grad(int hash, double x)
         {
             // Result table
             // ---+------+----

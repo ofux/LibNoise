@@ -141,13 +141,13 @@ namespace LibNoise.Transformer
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Get the output values from the three displacement modules.  Add each
             // value to the corresponding coordinate in the input value.
-            float xDisplace = x + (((IModule3D) _xDisplaceModule).GetValue(x, y, z));
-            float yDisplace = y + (((IModule3D) _yDisplaceModule).GetValue(x, y, z));
-            float zDisplace = z + (((IModule3D) _zDisplaceModule).GetValue(x, y, z));
+            double xDisplace = x + (((IModule3D) _xDisplaceModule).GetValue(x, y, z));
+            double yDisplace = y + (((IModule3D) _yDisplaceModule).GetValue(x, y, z));
+            double zDisplace = z + (((IModule3D) _zDisplaceModule).GetValue(x, y, z));
 
             // Retrieve the output value using the offsetted input value instead of
             // the original input value.

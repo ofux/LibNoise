@@ -73,9 +73,9 @@ namespace LibNoise.Model
         /// <param name="lat">The latitude of the input value, in degrees</param>
         /// <param name="lon">The longitude of the input value, in degrees</param>
         /// <returns>The output value from the noise module</returns>
-        public float GetValue(float lat, float lon)
+        public double GetValue(double lat, double lon)
         {
-            float x = 0.0f, y = 0.0f, z = 0.0f;
+            double x = 0.0, y = 0.0, z = 0.0;
             Libnoise.LatLonToXYZ(lat, lon, ref x, ref y, ref z);
             return ((IModule3D) PSourceModule).GetValue(x, y, z);
         }

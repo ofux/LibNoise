@@ -23,7 +23,7 @@ namespace LibNoise.Builder
     /// noise module, although it can store values from any source.  A noise
     /// map is often used as a terrain height map or a grayscale texture. 
     /// </summary>
-    public class NoiseMap : DataMap<float>, IMap2D<float>
+    public class NoiseMap : DataMap<double>, IMap2D<double>
     {
         #region Ctor/Dtor
 
@@ -34,7 +34,7 @@ namespace LibNoise.Builder
         {
             HasMaxDimension = false;
 
-            BorderValue = 0.0f;
+            BorderValue = 0.0;
             AllocateBuffer();
         }
 
@@ -54,7 +54,7 @@ namespace LibNoise.Builder
         public NoiseMap(int width, int height)
         {
             HasMaxDimension = false;
-            BorderValue = 0.0f;
+            BorderValue = 0.0;
             AllocateBuffer(width, height);
         }
 
@@ -66,7 +66,7 @@ namespace LibNoise.Builder
         public NoiseMap(NoiseMap copy)
         {
             HasMaxDimension = false;
-            BorderValue = 0.0f;
+            BorderValue = 0.0;
             CopyFrom(copy);
         }
 
@@ -79,10 +79,10 @@ namespace LibNoise.Builder
         /// </summary>
         /// <param name="min">the lowest value</param>
         /// <param name="max">the highest value</param>
-        public void MinMax(out float min, out float max)
+        public void MinMax(out double min, out double max)
         {
-            min = max = 0f;
-            float[] data = Data;
+            min = max = 0;
+            double[] data = Data;
             if (data != null && data.Length > 0)
             {
                 // First value, min and max for now
@@ -103,30 +103,30 @@ namespace LibNoise.Builder
         #region Internal
 
         /// <summary>
-        /// Return the memory size of a float.
+        /// Return the memory size of a double.
         /// </summary>
-        /// <returns>The memory size of a float.</returns>
+        /// <returns>The memory size of a double.</returns>
         protected override int SizeofT()
         {
-            return 32;
+            return 64;
         }
 
         /// <summary>
-        /// Return the maximum value of a float type.
+        /// Return the maximum value of a double type.
         /// </summary>
         /// <returns>Maximum value.</returns>
-        protected override float MaxvalofT()
+        protected override double MaxvalofT()
         {
-            return float.MaxValue;
+            return double.MaxValue;
         }
 
         /// <summary>
-        /// Return the minimum value of a float type.
+        /// Return the minimum value of a double type.
         /// </summary>
         /// <returns>Mimum value.</returns>
-        protected override float MinvalofT()
+        protected override double MinvalofT()
         {
-            return float.MinValue;
+            return double.MinValue;
         }
 
         #endregion

@@ -45,19 +45,19 @@ namespace LibNoise.Modifier
         /// <summary>
         /// Default edge-falloff value for the Select noise module.
         /// </summary>
-        public const float DEFAULT_FALL_OFF = -1.0f;
+        public const double DEFAULT_FALL_OFF = -1.0;
 
         /// <summary>
         /// Default lower bound of the selection range for the
         /// Select noise module.
         /// </summary>
-        public const float DEFAULT_LOWER_BOUND = -1.0f;
+        public const double DEFAULT_LOWER_BOUND = -1.0;
 
         /// <summary>
         /// Default upper bound of the selection range for the
         /// Select noise module.
         /// </summary>
-        public const float DEFAULT_UPPER_BOUND = 1.0f;
+        public const double DEFAULT_UPPER_BOUND = 1.0;
 
         #endregion
 
@@ -93,7 +93,7 @@ namespace LibNoise.Modifier
         ///   if the output value from the control module is greater than 0.9
         ///   ( = 0.8 + 0.1).
         /// </summary>
-        protected float _edgeFalloff = DEFAULT_FALL_OFF;
+        protected double _edgeFalloff = DEFAULT_FALL_OFF;
 
         /// <summary>
         /// The left input module
@@ -103,7 +103,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// Lower bound of the selection range.
         /// </summary>
-        protected float _lowerBound = DEFAULT_LOWER_BOUND;
+        protected double _lowerBound = DEFAULT_LOWER_BOUND;
 
         /// <summary>
         /// The right input module
@@ -113,7 +113,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// Upper bound of the selection range.
         /// </summary>
-        protected float _upperBound = DEFAULT_UPPER_BOUND;
+        protected double _upperBound = DEFAULT_UPPER_BOUND;
 
         #endregion
 
@@ -122,7 +122,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// gets the lower bound
         /// </summary>
-        public float LowerBound
+        public double LowerBound
         {
             get { return _lowerBound; }
         }
@@ -130,7 +130,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// gets the upper bound
         /// </summary>
-        public float UpperBound
+        public double UpperBound
         {
             get { return _upperBound; }
         }
@@ -138,14 +138,14 @@ namespace LibNoise.Modifier
         /// <summary>
         /// Gets or sets the falloff value at the edge transition.
         /// </summary>
-        public float EdgeFalloff
+        public double EdgeFalloff
         {
             get { return _edgeFalloff; }
             set
             {
                 // Make sure that the edge falloff curves do not overlap.
-                float boundSize = _upperBound - _lowerBound;
-                _edgeFalloff = (value > boundSize/2.0f) ? boundSize/2.0f : value;
+                double boundSize = _upperBound - _lowerBound;
+                _edgeFalloff = (value > boundSize/2.0) ? boundSize/2.0 : value;
             }
         }
 
@@ -185,8 +185,8 @@ namespace LibNoise.Modifier
         }
 
 
-        public Select(IModule controlModule, IModule rightModule, IModule leftModule, float lower, float upper,
-            float edge)
+        public Select(IModule controlModule, IModule rightModule, IModule leftModule, double lower, double upper,
+            double edge)
         {
             _controlModule = controlModule;
             _leftModule = leftModule;
@@ -205,7 +205,7 @@ namespace LibNoise.Modifier
         /// </summary>
         /// <param name="lower"></param>
         /// <param name="upper"></param>
-        public void SetBounds(float lower, float upper)
+        public void SetBounds(double lower, double upper)
         {
             Debug.Assert(_lowerBound < _upperBound, "Lower bound must lower than upper bound");
             _lowerBound = lower;
@@ -226,10 +226,10 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float controlValue = ((IModule3D) _controlModule).GetValue(x, y, z);
-            float alpha;
+            double controlValue = ((IModule3D) _controlModule).GetValue(x, y, z);
+            double alpha;
 
             if (_edgeFalloff > 0.0)
             {
@@ -244,8 +244,8 @@ namespace LibNoise.Modifier
                     // The output value from the control module is near the lower end of the
                     // selector threshold and within the smooth curve. Interpolate between
                     // the output values from the first and second source modules.
-                    float lowerCurve = (_lowerBound - _edgeFalloff);
-                    float upperCurve = (_lowerBound + _edgeFalloff);
+                    double lowerCurve = (_lowerBound - _edgeFalloff);
+                    double upperCurve = (_lowerBound + _edgeFalloff);
 
                     alpha = Libnoise.SCurve3(
                         (controlValue - lowerCurve)/(upperCurve - lowerCurve)
@@ -268,8 +268,8 @@ namespace LibNoise.Modifier
                     // The output value from the control module is near the upper end of the
                     // selector threshold and within the smooth curve. Interpolate between
                     // the output values from the first and second source modules.
-                    float lowerCurve = (_upperBound - _edgeFalloff);
-                    float upperCurve = (_upperBound + _edgeFalloff);
+                    double lowerCurve = (_upperBound - _edgeFalloff);
+                    double upperCurve = (_upperBound + _edgeFalloff);
 
                     alpha = Libnoise.SCurve3(
                         (controlValue - lowerCurve)/(upperCurve - lowerCurve)

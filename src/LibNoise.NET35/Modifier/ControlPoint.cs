@@ -31,12 +31,12 @@ namespace LibNoise.Modifier
         /// <summary>
         /// The input value stored in the control point
         /// </summary>
-        public float Input;
+        public double Input;
 
         /// <summary>
         /// The output value stored in the control point
         /// </summary>
-        public float Output;
+        public double Output;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace LibNoise.Modifier
         /// </summary>
         /// <param name="input">The input value stored in the control point</param>
         /// <param name="output">The output value stored in the control point</param>
-        public ControlPoint(float input, float output)
+        public ControlPoint(double input, double output)
         {
             Input = input;
             Output = output;

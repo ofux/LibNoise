@@ -51,9 +51,9 @@ namespace LibNoise.Filter
         /// </summary>
         public HybridMultiFractal()
         {
-            _gain = 1.0f;
-            _offset = 0.7f;
-            _spectralExponent = 0.25f;
+            _gain = 1.0;
+            _offset = 0.7;
+            _spectralExponent = 0.25;
 
             ComputeSpectralWeights();
         }
@@ -68,17 +68,17 @@ namespace LibNoise.Filter
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
-            float signal;
+            double signal;
             int curOctave;
 
             x *= _frequency;
             y *= _frequency;
 
             // Initialize value : get first octave of function; later octaves are weighted
-            float value = _source2D.GetValue(x, y) + _offset;
-            float weight = _gain*value;
+            double value = _source2D.GetValue(x, y) + _offset;
+            double weight = _gain*value;
 
             x *= _lacunarity;
             y *= _lacunarity;
@@ -88,7 +88,7 @@ namespace LibNoise.Filter
             {
                 // prevent divergence
                 if (weight > 1.0)
-                    weight = 1.0f;
+                    weight = 1.0;
 
                 // get next higher frequency
                 signal = (_offset + _source2D.GetValue(x, y))*_spectralWeights[curOctave];
@@ -108,9 +108,9 @@ namespace LibNoise.Filter
             }
 
             //take care of remainder in _octaveCount
-            float remainder = _octaveCount - (int) _octaveCount;
+            double remainder = _octaveCount - (int) _octaveCount;
 
-            if (remainder > 0.0f)
+            if (remainder > 0.0)
             {
                 signal = _source2D.GetValue(x, y);
                 signal *= _spectralWeights[curOctave];
@@ -132,9 +132,9 @@ namespace LibNoise.Filter
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float signal;
+            double signal;
             int curOctave;
 
             x *= _frequency;
@@ -142,8 +142,8 @@ namespace LibNoise.Filter
             z *= _frequency;
 
             // Initialize value : get first octave of function; later octaves are weighted
-            float value = _source3D.GetValue(x, y, z) + _offset;
-            float weight = _gain*value;
+            double value = _source3D.GetValue(x, y, z) + _offset;
+            double weight = _gain*value;
 
             x *= _lacunarity;
             y *= _lacunarity;
@@ -154,7 +154,7 @@ namespace LibNoise.Filter
             {
                 // prevent divergence
                 if (weight > 1.0)
-                    weight = 1.0f;
+                    weight = 1.0;
 
                 // get next higher frequency
                 signal = (_offset + _source3D.GetValue(x, y, z))*_spectralWeights[curOctave];
@@ -175,9 +175,9 @@ namespace LibNoise.Filter
             }
 
             //take care of remainder in _octaveCount
-            float remainder = _octaveCount - (int) _octaveCount;
+            double remainder = _octaveCount - (int) _octaveCount;
 
-            if (remainder > 0.0f)
+            if (remainder > 0.0)
             {
                 signal = _source3D.GetValue(x, y, z);
                 signal *= _spectralWeights[curOctave];

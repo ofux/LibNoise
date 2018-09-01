@@ -36,12 +36,12 @@ namespace LibNoise.Renderer
         /// <summary>
         /// Lower height boundary of the heightmap
         /// </summary>
-        protected float _lowerHeightBound = 0f;
+        protected double _lowerHeightBound = 0;
 
         /// <summary>
         /// Upper height boundary of the heightmap
         /// </summary>
-        protected float _upperHeightBound = 0f;
+        protected double _upperHeightBound = 0;
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace LibNoise.Renderer
         /// <summary>
         /// Gets or sets the lower height boundary of the heightmap
         /// </summary>
-        public float LowerHeightBound
+        public double LowerHeightBound
         {
             get { return _lowerHeightBound; }
         }
@@ -58,7 +58,7 @@ namespace LibNoise.Renderer
         /// <summary>
         /// Gets or sets the upper height boundary of the heightmap
         /// </summary>
-        public float UpperHeightBound
+        public double UpperHeightBound
         {
             get { return _upperHeightBound; }
         }
@@ -96,7 +96,7 @@ namespace LibNoise.Renderer
         /// </summary>
         /// <param name="lowerBound">The lower boundary of the heightmap</param>
         /// <param name="upperBound">The upper boundary of the heightmap</param>
-        public void SetBounds(float lowerBound, float upperBound)
+        public void SetBounds(double lowerBound, double upperBound)
         {
             if (lowerBound == upperBound || lowerBound > upperBound)
                 throw new ArgumentException("Incoherent bounds : lowerBound == upperBound or lowerBound > upperBound");
@@ -147,11 +147,11 @@ namespace LibNoise.Renderer
 
             SetHeightmapSize(width, height);
 
-            float pSource, pSourceOffset;
+            double pSource, pSourceOffset;
 
             int yOffset, xOffset;
 
-            float boundDiff = _upperHeightBound - _lowerHeightBound;
+            double boundDiff = _upperHeightBound - _lowerHeightBound;
 
             for (int y = 0; y < height; y++)
             {
@@ -197,7 +197,7 @@ namespace LibNoise.Renderer
                         if (xOffset != x || yOffset != y)
                         {
                             pSourceOffset = _noiseMap.GetValue(xOffset, yOffset);
-                            pSource = Libnoise.Lerp(pSource, pSourceOffset, 0.5f);
+                            pSource = Libnoise.Lerp(pSource, pSourceOffset, 0.5);
                         }
                     }
 
@@ -235,7 +235,7 @@ namespace LibNoise.Renderer
         /// <param name="y"></param>
         /// <param name="source"></param>
         /// <param name="boundDiff"></param>
-        protected abstract void RenderHeight(int x, int y, float source, float boundDiff);
+        protected abstract void RenderHeight(int x, int y, double source, double boundDiff);
 
         #endregion
     }

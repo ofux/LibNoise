@@ -33,7 +33,7 @@ namespace LibNoise.Filter
         /// </summary>
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x)
+        public double GetValue(double x)
         {
             x *= _frequency;
 
@@ -50,7 +50,7 @@ namespace LibNoise.Filter
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
             x *= _frequency;
             y *= _frequency;
@@ -69,7 +69,7 @@ namespace LibNoise.Filter
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             x *= _frequency;
             y *= _frequency;
@@ -90,7 +90,7 @@ namespace LibNoise.Filter
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <param name="t">The input coordinate on the t-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z, float t)
+        public double GetValue(double x, double y, double z, double t)
         {
             x *= _frequency;
             y *= _frequency;

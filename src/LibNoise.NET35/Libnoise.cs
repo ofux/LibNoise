@@ -34,32 +34,32 @@ namespace LibNoise
         /// <summary>
         /// Pi
         /// </summary>
-        public const float Pi = 3.1415926535897932385f;
+        public const double Pi = 3.1415926535897932385;
 
         /// <summary>
         /// Square root of 2.
         /// </summary>
-        public const float Sqrt2 = 1.4142135623730950488f;
+        public const double Sqrt2 = 1.4142135623730950488;
 
         /// <summary>
         /// Square root of 3.
         /// </summary>
-        public const float Sqrt3 = 1.7320508075688772935f;
+        public const double Sqrt3 = 1.7320508075688772935;
 
         /// <summary>
         /// Square root of 5.
         /// </summary>
-        public const float Sqrt5 = 2.2360679774997896964f;
+        public const double Sqrt5 = 2.2360679774997896964;
 
         /// <summary>
         /// Converts an angle from degrees to radians.
         /// </summary>
-        public const float Deg2Rad = Pi/180.0f;
+        public const double Deg2Rad = Pi/180.0;
 
         /// <summary>
         /// Converts an angle from radians to degrees.
         /// </summary>
-        public const float Rad2Deg = 1.0f/Deg2Rad;
+        public const double Rad2Deg = 1.0/Deg2Rad;
 
         #endregion
 
@@ -73,12 +73,12 @@ namespace LibNoise
         /// <param name="x">By ref, this parameter contains the x coordinate.</param>
         /// <param name="y">By ref, this parameter contains the y coordinate.</param>
         /// <param name="z">By ref, this parameter contains the z coordinate.</param>
-        public static void LatLonToXYZ(float lat, float lon, ref float x, ref float y, ref float z)
+        public static void LatLonToXYZ(double lat, double lon, ref double x, ref double y, ref double z)
         {
-            var r = (float) Math.Cos(Deg2Rad*lat);
-            x = r*(float) Math.Cos(Deg2Rad*lon);
-            y = (float) Math.Sin(Deg2Rad*lat);
-            z = r*(float) Math.Sin(Deg2Rad*lon);
+            var r = Math.Cos(Deg2Rad*lat);
+            x = r*Math.Cos(Deg2Rad*lon);
+            y = Math.Sin(Deg2Rad*lat);
+            z = r*Math.Sin(Deg2Rad*lon);
         }
 
         #endregion
@@ -96,16 +96,16 @@ namespace LibNoise
         /// <param name="n1">The second value.</param>
         /// <param name="a">the amount to interpolate between the two values.</param>
         /// <returns>The interpolated value.</returns>
-        public static byte Lerp(byte n0, byte n1, float a)
+        public static byte Lerp(byte n0, byte n1, double a)
         {
-            float c0 = n0/255.0f;
-            float c1 = n1/255.0f;
+            double c0 = n0/255.0;
+            double c1 = n1/255.0;
 
-            return (byte) ((c0 + a*(c1 - c0))*255.0f);
+            return (byte) ((c0 + a*(c1 - c0))*255.0);
         }
 
         /// <summary>
-        /// Performs linear interpolation between two float-values by a.
+        /// Performs linear interpolation between two double-values by a.
         ///
         /// The amount value should range from 0.0 to 1.0.  If the amount value is
         /// 0.0, this function returns n0.  If the amount value is 1.0, this
@@ -115,7 +115,7 @@ namespace LibNoise
         /// <param name="n1">The second value.</param>
         /// <param name="a">The amount to interpolate between the two values.</param>
         /// <returns>The interpolated value.</returns>
-        public static float Lerp(float n0, float n1, float a)
+        public static double Lerp(double n0, double n1, double a)
         {
             //return ((1.0 - a) * n0) + (a * n1);
             return n0 + a*(n1 - n0);
@@ -134,12 +134,12 @@ namespace LibNoise
         /// <param name="n3">The value after the second value.</param>
         /// <param name="a">The amount to interpolate between the two values.</param>
         /// <returns>The interpolated value.</returns>
-        public static float Cerp(float n0, float n1, float n2, float n3, float a)
+        public static double Cerp(double n0, double n1, double n2, double n3, double a)
         {
-            float p = (n3 - n2) - (n0 - n1);
-            float q = (n0 - n1) - p;
-            float r = n2 - n0;
-            float s = n1;
+            double p = (n3 - n2) - (n0 - n1);
+            double q = (n0 - n1) - p;
+            double r = n2 - n0;
+            double s = n1;
             return p*a*a*a + q*a*a + r*a + s;
         }
 
@@ -150,9 +150,9 @@ namespace LibNoise
         /// </summary>
         /// <param name="a">The value to map onto a cubic S-curve.</param>
         /// <returns>The mapped value.</returns>
-        public static float SCurve3(float a)
+        public static double SCurve3(double a)
         {
-            return (a*a*(3.0f - 2.0f*a));
+            return (a*a*(3.0 - 2.0*a));
         }
 
         /// <summary>
@@ -163,9 +163,9 @@ namespace LibNoise
         /// </summary>
         /// <param name="a">The value to map onto a quintic S-curve.</param>
         /// <returns>The mapped value.</returns>
-        public static float SCurve5(float a)
+        public static double SCurve5(double a)
         {
-            return a*a*a*(a*(a*6.0f - 15.0f) + 10.0f);
+            return a*a*a*(a*(a*6.0 - 15.0) + 10.0);
 
             /* original libnoise code
 			double a3 = a * a * a;
@@ -201,15 +201,6 @@ namespace LibNoise
             return value;
         }
 
-        public static float Clamp(float value, float lowerBound, float upperBound)
-        {
-            if (value < lowerBound)
-                return lowerBound;
-            if (value > upperBound)
-                return upperBound;
-            return value;
-        }
-
         public static double Clamp(double value, double lowerBound, double upperBound)
         {
             if (value < lowerBound)
@@ -220,11 +211,6 @@ namespace LibNoise
         }
 
         public static int Clamp01(int value)
-        {
-            return Clamp(value, 0, 1);
-        }
-
-        public static float Clamp01(float value)
         {
             return Clamp(value, 0, 1);
         }
@@ -248,19 +234,14 @@ namespace LibNoise
             b = c;
         }
 
-        public static void SwapValues(ref double a, ref double b)
-        {
-            SwapValues<double>(ref a, ref b);
-        }
-
         public static void SwapValues(ref int a, ref int b)
         {
             SwapValues<int>(ref a, ref b);
         }
 
-        public static void SwapValues(ref float a, ref float b)
+        public static void SwapValues(ref double a, ref double b)
         {
-            SwapValues<float>(ref a, ref b);
+            SwapValues<double>(ref a, ref b);
         }
 
         /// <summary>
@@ -307,12 +288,12 @@ namespace LibNoise
         }
 
         /// <summary>
-        /// Unpack the given float to an array of 4 bytes in big endian format.
+        /// Unpack the given double to an array of 4 bytes in big endian format.
         /// If the length of the buffer is too smal, it wil be resized.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="buffer">The output buffer.</param>
-        public static byte[] UnpackBigFloat(float value, ref byte[] buffer)
+        public static byte[] UnpackBigDouble(double value, ref byte[] buffer)
         {
             throw new NotImplementedException();
             /*
@@ -383,12 +364,12 @@ namespace LibNoise
         }
 
         /// <summary>
-        /// Unpack the given float (int32) to an array of 4 bytes  in little endian format.
+        /// Unpack the given double (int32) to an array of 4 bytes  in little endian format.
         /// If the length of the buffer is too smal, it wil be resized.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="buffer">The output buffer.</param>
-        public static byte[] UnpackLittleFloat(float value, ref byte[] buffer)
+        public static byte[] UnpackLittleDouble(double value, ref byte[] buffer)
         {
             throw new NotImplementedException();
 
@@ -407,19 +388,10 @@ namespace LibNoise
         }
 
         /// <summary>
-        /// faster methid than using (int)Math.floor(x).
+        /// faster method than using (int)Math.floor(x).
         /// </summary>
         /// <param name="x"></param>
         public static int FastFloor(double x)
-        {
-            return x >= 0 ? (int) x : (int) x - 1;
-        }
-
-        /// <summary>
-        /// faster methid than using (int)Math.floor(x).
-        /// </summary>
-        /// <param name="x">The x.</param>
-        public static int FastFloor(float x)
         {
             return x >= 0 ? (int) x : (int) x - 1;
         }

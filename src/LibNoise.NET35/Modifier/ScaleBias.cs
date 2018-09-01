@@ -34,13 +34,13 @@ namespace LibNoise.Modifier
         /// Default scale
         /// noise module.
         /// </summary>
-        public const float DEFAULT_SCALE = 1.0f;
+        public const double DEFAULT_SCALE = 1.0;
 
         /// <summary>
         /// Default bias
         /// noise module.
         /// </summary>
-        public const float DEFAULT_BIAS = 0.0f;
+        public const double DEFAULT_BIAS = 0.0;
 
         #endregion
 
@@ -49,12 +49,12 @@ namespace LibNoise.Modifier
         /// <summary>
         /// the bias to apply to the scaled output value from the source module.
         /// </summary>
-        protected float _bias = DEFAULT_BIAS;
+        protected double _bias = DEFAULT_BIAS;
 
         /// <summary>
         /// the scaling factor to apply to the output value from the source module.
         /// </summary>
-        protected float _scale = DEFAULT_SCALE;
+        protected double _scale = DEFAULT_SCALE;
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// gets or sets the scale value
         /// </summary>
-        public float Scale
+        public double Scale
         {
             get { return _scale; }
             set { _scale = value; }
@@ -72,7 +72,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// gets or sets the bias value
         /// </summary>
-        public float Bias
+        public double Bias
         {
             get { return _bias; }
             set { _bias = value; }
@@ -93,7 +93,7 @@ namespace LibNoise.Modifier
         }
 
 
-        public ScaleBias(IModule source, float scale, float bias)
+        public ScaleBias(IModule source, double scale, double bias)
             : base(source)
         {
             _scale = scale;
@@ -111,7 +111,7 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             return ((IModule3D) _sourceModule).GetValue(x, y, z)*_scale + _bias;
         }

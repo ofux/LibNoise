@@ -71,7 +71,7 @@ namespace LibNoise.Writer
 
             OpenFile();
 
-            float[] buffer = _heightmap.Share();
+            double[] buffer = _heightmap.Share();
 
             try
             {

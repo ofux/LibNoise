@@ -78,7 +78,7 @@ namespace LibNoise.Modifier
         /// </summary>
         /// <param name="input">The input value stored in the control point.</param>
         /// <param name="output">The output value stored in the control point.</param>
-        public void AddControlPoint(float input, float output)
+        public void AddControlPoint(double input, double output)
         {
             AddControlPoint(new ControlPoint(input, output));
         }
@@ -150,10 +150,10 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Get the output value from the source module.
-            float sourceModuleValue = ((IModule3D) _sourceModule).GetValue(x, y, z);
+            double sourceModuleValue = ((IModule3D) _sourceModule).GetValue(x, y, z);
 
             // Find the first element in the control point array that has an input value
             // larger than the output value from the source module.
@@ -179,9 +179,9 @@ namespace LibNoise.Modifier
                 return _controlPoints[index1].Output;
 
             // Compute the alpha value used for cubic interpolation.
-            float input0 = _controlPoints[index1].Input;
-            float input1 = _controlPoints[index2].Input;
-            float alpha = (sourceModuleValue - input0)/(input1 - input0);
+            double input0 = _controlPoints[index1].Input;
+            double input1 = _controlPoints[index2].Input;
+            double alpha = (sourceModuleValue - input0)/(input1 - input0);
 
             // Now perform the cubic interpolation given the alpha value.
             return Libnoise.Cerp(

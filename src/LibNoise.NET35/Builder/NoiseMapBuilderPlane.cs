@@ -44,12 +44,12 @@ namespace LibNoise.Builder
         /// <summary>
         /// Lower x boundary of the planar noise map, in units.
         /// </summary>
-        private float _lowerXBound;
+        private double _lowerXBound;
 
         /// <summary>
         /// Lower z boundary of the planar noise map, in units.
         /// </summary>
-        private float _lowerZBound;
+        private double _lowerZBound;
 
         /// <summary>
         /// A flag specifying whether seamless tiling is enabled.
@@ -59,12 +59,12 @@ namespace LibNoise.Builder
         /// <summary>
         /// Upper x boundary of the planar noise map, in units.
         /// </summary>
-        private float _upperXBound;
+        private double _upperXBound;
 
         /// <summary>
         /// Upper z boundary of the planar noise map, in units.
         /// </summary>
-        private float _upperZBound;
+        private double _upperZBound;
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the lower x boundary of the planar noise map, in units.
         /// </summary>
-        public float LowerXBound
+        public double LowerXBound
         {
             get { return _lowerXBound; }
         }
@@ -90,7 +90,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the lower z boundary of the planar noise map, in units.
         /// </summary>
-        public float LowerZBound
+        public double LowerZBound
         {
             get { return _lowerZBound; }
         }
@@ -98,7 +98,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the upper x boundary of the planar noise map, in units.
         /// </summary>
-        public float UpperXBound
+        public double UpperXBound
         {
             get { return _upperXBound; }
         }
@@ -106,7 +106,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the upper z boundary of the planar noise map, in units.
         /// </summary>
-        public float UpperZBound
+        public double UpperZBound
         {
             get { return _upperZBound; }
         }
@@ -121,7 +121,7 @@ namespace LibNoise.Builder
         public NoiseMapBuilderPlane()
         {
             _seamless = false;
-            _lowerXBound = _lowerZBound = _upperXBound = _upperZBound = 0.0f;
+            _lowerXBound = _lowerZBound = _upperXBound = _upperZBound = 0.0;
         }
 
 
@@ -138,7 +138,7 @@ namespace LibNoise.Builder
         /// <param name="lowerZBound">The lower z boundary of the noise map, in units.</param>
         /// <param name="upperZBound">The upper z boundary of the noise map, in units.</param>
         /// <param name="seamless">a flag specifying whether seamless tiling is enabled.</param>
-        public NoiseMapBuilderPlane(float lowerXBound, float upperXBound, float lowerZBound, float upperZBound,
+        public NoiseMapBuilderPlane(double lowerXBound, double upperXBound, double lowerZBound, double upperZBound,
             bool seamless)
         {
             _seamless = seamless;
@@ -161,7 +161,7 @@ namespace LibNoise.Builder
         /// <param name="upperXBound">The upper x boundary of the noise map, in units.</param>
         /// <param name="lowerZBound">The lower z boundary of the noise map, in units.</param>
         /// <param name="upperZBound">The upper z boundary of the noise map, in units.</param>
-        public void SetBounds(float lowerXBound, float upperXBound, float lowerZBound, float upperZBound)
+        public void SetBounds(double lowerXBound, double upperXBound, double lowerZBound, double upperZBound)
         {
             if (lowerXBound >= upperXBound || lowerZBound >= upperZBound)
             {
@@ -220,12 +220,12 @@ namespace LibNoise.Builder
             // Create the plane model.
             var model = new Plane(PSourceModule);
 
-            float xExtent = _upperXBound - _lowerXBound;
-            float zExtent = _upperZBound - _lowerZBound;
-            float xDelta = xExtent/PWidth;
-            float zDelta = zExtent/PHeight;
-            float xCur = _lowerXBound;
-            float zCur = _lowerZBound;
+            double xExtent = _upperXBound - _lowerXBound;
+            double zExtent = _upperZBound - _lowerZBound;
+            double xDelta = xExtent/PWidth;
+            double zDelta = zExtent/PHeight;
+            double xCur = _lowerXBound;
+            double zCur = _lowerZBound;
 
             // Fill every point in the noise map with the output values from the model.
             for (int z = 0; z < PHeight; z++)
@@ -234,7 +234,7 @@ namespace LibNoise.Builder
 
                 for (int x = 0; x < PWidth; x++)
                 {
-                    float finalValue;
+                    double finalValue;
                     var level = FilterLevel.Source;
 
                     if (PFilter != null)
@@ -248,16 +248,16 @@ namespace LibNoise.Builder
                     {
                         if (_seamless)
                         {
-                            float swValue = model.GetValue(xCur, zCur);
-                            float seValue = model.GetValue(xCur + xExtent, zCur);
-                            float nwValue = model.GetValue(xCur, zCur + zExtent);
-                            float neValue = model.GetValue(xCur + xExtent, zCur + zExtent);
+                            double swValue = model.GetValue(xCur, zCur);
+                            double seValue = model.GetValue(xCur + xExtent, zCur);
+                            double nwValue = model.GetValue(xCur, zCur + zExtent);
+                            double neValue = model.GetValue(xCur + xExtent, zCur + zExtent);
 
-                            float xBlend = 1.0f - ((xCur - _lowerXBound)/xExtent);
-                            float zBlend = 1.0f - ((zCur - _lowerZBound)/zExtent);
+                            double xBlend = 1.0 - ((xCur - _lowerXBound)/xExtent);
+                            double zBlend = 1.0 - ((zCur - _lowerZBound)/zExtent);
 
-                            float z0 = Libnoise.Lerp(swValue, seValue, xBlend);
-                            float z1 = Libnoise.Lerp(nwValue, neValue, xBlend);
+                            double z0 = Libnoise.Lerp(swValue, seValue, xBlend);
+                            double z1 = Libnoise.Lerp(nwValue, neValue, xBlend);
 
                             finalValue = Libnoise.Lerp(z0, z1, zBlend);
                         }

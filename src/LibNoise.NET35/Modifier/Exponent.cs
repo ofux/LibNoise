@@ -37,7 +37,7 @@ namespace LibNoise.Modifier
         /// Default exponent
         /// noise module.
         /// </summary>
-        public const float DEFAULT_EXPONENT = 1.0f;
+        public const double DEFAULT_EXPONENT = 1.0;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// Exponent to apply to the output value from the source module.
         /// </summary>
-        protected float _exponent = DEFAULT_EXPONENT;
+        protected double _exponent = DEFAULT_EXPONENT;
 
         #endregion
 
@@ -55,7 +55,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// gets or sets the exponent
         /// </summary>
-        public float ExponentValue
+        public double ExponentValue
         {
             get { return _exponent; }
             set { _exponent = value; }
@@ -76,7 +76,7 @@ namespace LibNoise.Modifier
         }
 
 
-        public Exponent(IModule source, float exponent)
+        public Exponent(IModule source, double exponent)
             : base(source)
         {
             _exponent = exponent;
@@ -93,11 +93,11 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float value = ((IModule3D) _sourceModule).GetValue(x, y, z);
-            value = (value + 1.0f)/2.0f;
-            return ((float) Math.Pow(Libnoise.FastFloor(value), _exponent)*2.0f - 1.0f);
+            double value = ((IModule3D) _sourceModule).GetValue(x, y, z);
+            value = (value + 1.0)/2.0;
+            return Math.Pow(Libnoise.FastFloor(value), _exponent)*2.0 - 1.0;
         }
 
         #endregion

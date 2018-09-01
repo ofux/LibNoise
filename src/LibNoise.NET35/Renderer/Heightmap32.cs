@@ -21,7 +21,7 @@ namespace LibNoise.Renderer
     using LibNoise.Builder;
 
     /// <summary>
-    /// Implements a 32 bits Heightmap, a 2-dimensional array of float values (+-1.5 x 10^−45 to +-3.4 x 10^38)
+    /// Implements a 32 bits Heightmap, a 2-dimensional array of double values (+-1.5 x 10^−45 to +-3.4 x 10^38)
     /// </summary>
     public class Heightmap32 : NoiseMap
     {

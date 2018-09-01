@@ -50,22 +50,22 @@ namespace LibNoise.Builder
         /// <summary>
         /// Lower Angle boundary of the planar noise map, in units.
         /// </summary>
-        private float _lowerAngleBound;
+        private double _lowerAngleBound;
 
         /// <summary>
         /// Lower Height boundary of the planar noise map, in units.
         /// </summary>
-        private float _lowerHeightBound;
+        private double _lowerHeightBound;
 
         /// <summary>
         /// Upper Angle boundary of the planar noise map, in units.
         /// </summary>
-        private float _upperAngleBound;
+        private double _upperAngleBound;
 
         /// <summary>
         /// Upper Height boundary of the planar noise map, in units.
         /// </summary>
-        private float _upperHeightBound;
+        private double _upperHeightBound;
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the lower Height boundary of the planar noise map, in units.
         /// </summary>
-        public float LowerHeightBound
+        public double LowerHeightBound
         {
             get { return _lowerHeightBound; }
         }
@@ -82,7 +82,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the lower Angle boundary of the planar noise map, in units.
         /// </summary>
-        public float LowerAngleBound
+        public double LowerAngleBound
         {
             get { return _lowerAngleBound; }
         }
@@ -90,7 +90,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the upper Angle boundary of the planar noise map, in units.
         /// </summary>
-        public float UpperAngleBound
+        public double UpperAngleBound
         {
             get { return _upperAngleBound; }
         }
@@ -98,7 +98,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the upper Height boundary of the planar noise map, in units.
         /// </summary>
-        public float UpperHeightBound
+        public double UpperHeightBound
         {
             get { return _upperHeightBound; }
         }
@@ -112,7 +112,7 @@ namespace LibNoise.Builder
         /// </summary>
         public NoiseMapBuilderCylinder()
         {
-            SetBounds(-180.0f, 180.0f, -10.0f, 10.0f);
+            SetBounds(-180.0, 180.0, -10.0, 10.0);
         }
 
         #endregion
@@ -131,8 +131,8 @@ namespace LibNoise.Builder
         /// <param name="upperAngleBound">The upper Angle boundary of the noise map, in units.</param>
         /// <param name="lowerHeightBound">The lower Height boundary of the noise map, in units.</param>
         /// <param name="upperHeightBound">The upper Height boundary of the noise map, in units.</param>
-        public void SetBounds(float lowerAngleBound, float upperAngleBound, float lowerHeightBound,
-            float upperHeightBound)
+        public void SetBounds(double lowerAngleBound, double upperAngleBound, double lowerHeightBound,
+            double upperHeightBound)
         {
             if (lowerAngleBound >= upperAngleBound || lowerHeightBound >= upperHeightBound)
             {
@@ -191,14 +191,14 @@ namespace LibNoise.Builder
             // Create the plane model.
             var model = new Cylinder((IModule3D) PSourceModule);
 
-            float angleExtent = _upperAngleBound - _lowerAngleBound;
-            float heightExtent = _upperHeightBound - _lowerHeightBound;
+            double angleExtent = _upperAngleBound - _lowerAngleBound;
+            double heightExtent = _upperHeightBound - _lowerHeightBound;
 
-            float xDelta = angleExtent/PWidth;
-            float yDelta = heightExtent/PHeight;
+            double xDelta = angleExtent/PWidth;
+            double yDelta = heightExtent/PHeight;
 
-            float curAngle = _lowerAngleBound;
-            float curHeight = _lowerHeightBound;
+            double curAngle = _lowerAngleBound;
+            double curHeight = _lowerHeightBound;
 
             // Fill every point in the noise map with the output values from the model.
             for (int y = 0; y < PHeight; y++)
@@ -207,7 +207,7 @@ namespace LibNoise.Builder
 
                 for (int x = 0; x < PWidth; x++)
                 {
-                    float finalValue;
+                    double finalValue;
                     var level = FilterLevel.Source;
 
                     if (PFilter != null)

@@ -106,16 +106,16 @@ namespace LibNoise.Model
         /// extrapolated along the line that this segment is part of.</summary>
         /// <param name="p">The distance along the line segment (ranges from 0.0 to 1.0)</param>
         /// <returns>The output value from the noise module</returns>
-        public float GetValue(float p)
+        public double GetValue(double p)
         {
-            float x = (this.endPosition.x - this.startPosition.x) * p + this.startPosition.x;
-            float y = (this.endPosition.y - this.startPosition.y) * p + this.startPosition.y;
-            float z = (this.endPosition.z - this.startPosition.z) * p + this.startPosition.z;
+            double x = (this.endPosition.x - this.startPosition.x) * p + this.startPosition.x;
+            double y = (this.endPosition.y - this.startPosition.y) * p + this.startPosition.y;
+            double z = (this.endPosition.z - this.startPosition.z) * p + this.startPosition.z;
 
-            float value = ((IModule3D)this.PSourceModule).GetValue(x, y, z);
+            double value = ((IModule3D)this.PSourceModule).GetValue(x, y, z);
 
             if (this.attenuate)
-                return p * (1.0f - p) * 4.0f * value;
+                return p * (1.0 - p) * 4.0 * value;
             else
                 return value;
         }
@@ -125,7 +125,7 @@ namespace LibNoise.Model
         /// <param name="x">x coordinate of the end position</param>
         /// <param name="y">y coordinate of the end position</param>
         /// <param name="z">z coordinate of the end position</param>
-        public void SetEndPoint(float x, float y, float z)
+        public void SetEndPoint(double x, double y, double z)
         {
             this.endPosition.x = x;
             this.endPosition.y = y;
@@ -137,7 +137,7 @@ namespace LibNoise.Model
         /// <param name="x">x coordinate of the start position</param>
         /// <param name="y">y coordinate of the start position</param>
         /// <param name="z">z coordinate of the start position</param>
-        public void SetStartPoint(float x, float y, float z)
+        public void SetStartPoint(double x, double y, double z)
         {
             this.startPosition.x = x;
             this.startPosition.y = y;
@@ -156,17 +156,17 @@ namespace LibNoise.Model
             /// <summary>
             /// x coordinate of a position.
             /// </summary>
-            public float x;
+            public double x;
 
             /// <summary>
             /// y coordinate of a position.
             /// </summary>
-            public float y;
+            public double y;
 
             /// <summary>
             /// z coordinate of a position.
             /// </summary>
-            public float z;
+            public double z;
 
             #endregion
 
@@ -176,7 +176,7 @@ namespace LibNoise.Model
             /// <param name="x">The x.</param>
             /// <param name="y">The y.</param>
             /// <param name="z">The z.</param>
-            public Position(float x, float y, float z)
+            public Position(double x, double y, double z)
             {
                 this.x = x;
                 this.y = y;

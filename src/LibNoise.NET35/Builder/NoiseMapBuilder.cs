@@ -87,7 +87,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// The destination noise map that will contain the coherent-noise values.
         /// </summary>
-        protected IMap2D<float> PNoiseMap;
+        protected IMap2D<double> PNoiseMap;
 
         /// <summary>
         /// The source input module.
@@ -115,7 +115,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets or sets the noise map.
         /// </summary>
-        public IMap2D<float> NoiseMap
+        public IMap2D<double> NoiseMap
         {
             get { return PNoiseMap; }
             set { PNoiseMap = value; }

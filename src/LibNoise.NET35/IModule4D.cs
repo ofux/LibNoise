@@ -34,7 +34,7 @@ namespace LibNoise
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <param name="z">The input coordinate on the t-axis.</param>
         /// <returns>The resulting output value.</returns>
-        float GetValue(float x, float y, float z, float t);
+        double GetValue(double x, double y, double z, double t);
 
         #endregion
     }

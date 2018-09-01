@@ -53,7 +53,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// 
         /// </summary>
-        protected List<float> _controlPoints = new List<float>(2);
+        protected List<double> _controlPoints = new List<double>(2);
 
         /// <summary>
         /// Enables or disables the inversion of the terrace-forming curve
@@ -109,7 +109,7 @@ namespace LibNoise.Modifier
         /// It does not matter which order these points are added.
         /// </summary>
         /// <param name="input">The input value stored in the control point.</param>
-        public void AddControlPoint(float input)
+        public void AddControlPoint(double input)
         {
             if (_controlPoints.Contains(input))
             {
@@ -140,7 +140,7 @@ namespace LibNoise.Modifier
         /// Returns a read-only IList<ControlPoint> wrapper for the current ControlPoint list.
         /// </summary>
         /// <returns>The read only list</returns>
-        public IList<float> getControlPoints()
+        public IList<double> getControlPoints()
         {
             return _controlPoints.AsReadOnly();
         }
@@ -177,8 +177,8 @@ namespace LibNoise.Modifier
 
             ClearControlPoints();
 
-            float terraceStep = 2.0f/(controlPointCount - 1.0f);
-            float curValue = -1.0f;
+            double terraceStep = 2.0/(controlPointCount - 1.0);
+            double curValue = -1.0;
             for (int i = 0; i < controlPointCount; i++)
             {
                 AddControlPoint(curValue);
@@ -197,10 +197,10 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Get the output value from the source module.
-            float sourceModuleValue = ((IModule3D) _sourceModule).GetValue(x, y, z);
+            double sourceModuleValue = ((IModule3D) _sourceModule).GetValue(x, y, z);
 
             // Find the first element in the control point array that has a value
             // larger than the output value from the source module.
@@ -224,13 +224,13 @@ namespace LibNoise.Modifier
                 return _controlPoints[index1];
 
             // Compute the alpha value used for linear interpolation.
-            float value0 = _controlPoints[index0];
-            float value1 = _controlPoints[index1];
-            float alpha = (sourceModuleValue - value0)/(value1 - value0);
+            double value0 = _controlPoints[index0];
+            double value1 = _controlPoints[index1];
+            double alpha = (sourceModuleValue - value0)/(value1 - value0);
 
             if (_invert)
             {
-                alpha = 1.0f - alpha;
+                alpha = 1.0 - alpha;
                 Libnoise.SwapValues(ref value0, ref value1);
             }
 
@@ -250,7 +250,7 @@ namespace LibNoise.Modifier
         /// </summary>
         protected void SortControlPoints()
         {
-            _controlPoints.Sort(delegate(float p1, float p2)
+            _controlPoints.Sort(delegate(double p1, double p2)
             {
                 if (p1 > p2)
                     return 1;

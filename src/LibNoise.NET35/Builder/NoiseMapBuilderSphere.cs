@@ -47,22 +47,22 @@ namespace LibNoise.Builder
         /// <summary>
         /// Eastern boundary of the spherical noise map, in degrees.
         /// </summary>
-        private float _eastLonBound;
+        private double _eastLonBound;
 
         /// <summary>
         /// Northern boundary of the spherical noise map, in degrees.
         /// </summary>
-        private float _northLatBound;
+        private double _northLatBound;
 
         /// <summary>
         /// Southern boundary of the spherical noise map, in degrees.
         /// </summary>
-        private float _southLatBound;
+        private double _southLatBound;
 
         /// <summary>
         /// Western boundary of the spherical noise map, in degrees.
         /// </summary>
-        private float _westLonBound;
+        private double _westLonBound;
 
         #endregion
 
@@ -71,7 +71,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the eastern boundary of the spherical noise map, in degrees.
         /// </summary>
-        public float EastLonBound
+        public double EastLonBound
         {
             get { return _eastLonBound; }
         }
@@ -79,7 +79,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the northern boundary of the spherical noise map, in degrees.
         /// </summary>
-        public float NorthLatBound
+        public double NorthLatBound
         {
             get { return _northLatBound; }
         }
@@ -87,7 +87,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the southern boundary of the spherical noise map, in degrees.
         /// </summary>
-        public float SouthLatBound
+        public double SouthLatBound
         {
             get { return _southLatBound; }
         }
@@ -95,7 +95,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets the western boundary of the spherical noise map, in degrees.
         /// </summary>
-        public float WestLonBound
+        public double WestLonBound
         {
             get { return _westLonBound; }
         }
@@ -109,7 +109,7 @@ namespace LibNoise.Builder
         /// </summary>
         public NoiseMapBuilderSphere()
         {
-            SetBounds(-90f, 90f, -180f, 180f); // degrees
+            SetBounds(-90, 90, -180, 180); // degrees
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace LibNoise.Builder
         /// <param name="northLatBound"></param>
         /// <param name="westLonBound"></param>
         /// <param name="eastLonBound"></param>
-        public void SetBounds(float southLatBound, float northLatBound, float westLonBound, float eastLonBound)
+        public void SetBounds(double southLatBound, double northLatBound, double westLonBound, double eastLonBound)
         {
             if (southLatBound >= northLatBound || westLonBound >= eastLonBound)
             {
@@ -185,14 +185,14 @@ namespace LibNoise.Builder
             // Create the plane model.
             var model = new Sphere((IModule3D) PSourceModule);
 
-            float lonExtent = _eastLonBound - _westLonBound;
-            float latExtent = _northLatBound - _southLatBound;
+            double lonExtent = _eastLonBound - _westLonBound;
+            double latExtent = _northLatBound - _southLatBound;
 
-            float xDelta = lonExtent/PWidth;
-            float yDelta = latExtent/PHeight;
+            double xDelta = lonExtent/PWidth;
+            double yDelta = latExtent/PHeight;
 
-            float curLon = _westLonBound;
-            float curLat = _southLatBound;
+            double curLon = _westLonBound;
+            double curLat = _southLatBound;
 
             // Fill every point in the noise map with the output values from the model.
             for (int y = 0; y < PHeight; y++)
@@ -201,7 +201,7 @@ namespace LibNoise.Builder
 
                 for (int x = 0; x < PWidth; x++)
                 {
-                    float finalValue;
+                    double finalValue;
                     var level = FilterLevel.Source;
 
                     if (PFilter != null)

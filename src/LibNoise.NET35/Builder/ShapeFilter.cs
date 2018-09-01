@@ -84,7 +84,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Default value.
         /// </summary>
-        public const float DefaultValue = -0.5f;
+        public const double DefaultValue = -0.5;
 
         #endregion
 
@@ -98,7 +98,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// 
         /// </summary>
-        protected float Constant = DefaultValue;
+        protected double Constant = DefaultValue;
 
         /// <summary>
         /// The shape image
@@ -121,7 +121,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// the constant output value.
         /// </summary>
-        public float ConstantValue
+        public double ConstantValue
         {
             get { return Constant; }
             set { Constant = value; }
@@ -159,7 +159,7 @@ namespace LibNoise.Builder
         /// <param name="y">Y.</param>
         /// <param name="source">Source.</param>
         /// <returns>Filtered value.</returns>
-        public float FilterValue(int x, int y, float source)
+        public double FilterValue(int x, int y, double source)
         {
             byte level = GetGreyscaleLevel(x, y);
 
@@ -174,7 +174,7 @@ namespace LibNoise.Builder
             return Libnoise.Lerp(
                 Constant,
                 source,
-                level/255.0f
+                level/255.0
                 );
         }
 

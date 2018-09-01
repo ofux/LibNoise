@@ -39,13 +39,13 @@ namespace LibNoise.Modifier
         /// Default lower bound of the clamping range 
         /// noise module.
         /// </summary>
-        public const float DEFAULT_LOWER_BOUND = -1.0f;
+        public const double DEFAULT_LOWER_BOUND = -1.0;
 
         /// <summary>
         /// Default upper bound of the clamping range
         /// noise module.
         /// </summary>
-        public const float DEFAULT_UPPER_BOUND = 1.0f;
+        public const double DEFAULT_UPPER_BOUND = 1.0;
 
         #endregion
 
@@ -54,12 +54,12 @@ namespace LibNoise.Modifier
         /// <summary>
         /// 
         /// </summary>
-        protected float _lowerBound = DEFAULT_LOWER_BOUND;
+        protected double _lowerBound = DEFAULT_LOWER_BOUND;
 
         /// <summary>
         /// 
         /// </summary>
-        protected float _upperBound = DEFAULT_UPPER_BOUND;
+        protected double _upperBound = DEFAULT_UPPER_BOUND;
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// 
         /// </summary>
-        public float LowerBound
+        public double LowerBound
         {
             get { return _lowerBound; }
             set { _lowerBound = value; }
@@ -77,7 +77,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// 
         /// </summary>
-        public float UpperBound
+        public double UpperBound
         {
             get { return _upperBound; }
             set { _upperBound = value; }
@@ -98,7 +98,7 @@ namespace LibNoise.Modifier
         }
 
 
-        public Clamp(IModule source, float lower, float upper)
+        public Clamp(IModule source, double lower, double upper)
             : base(source)
         {
             _lowerBound = lower;
@@ -116,9 +116,9 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float value = ((IModule3D) _sourceModule).GetValue(x, y, z);
+            double value = ((IModule3D) _sourceModule).GetValue(x, y, z);
 
             if (value < _lowerBound)
                 return _lowerBound;

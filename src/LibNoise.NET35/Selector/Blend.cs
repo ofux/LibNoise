@@ -111,11 +111,11 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float v0 = ((IModule3D) _leftModule).GetValue(x, y, z);
-            float v1 = ((IModule3D) _rightModule).GetValue(x, y, z);
-            float alpha = (((IModule3D) _controlModule).GetValue(x, y, z) + 1.0f)/2.0f;
+            double v0 = ((IModule3D) _leftModule).GetValue(x, y, z);
+            double v1 = ((IModule3D) _rightModule).GetValue(x, y, z);
+            double alpha = (((IModule3D) _controlModule).GetValue(x, y, z) + 1.0)/2.0;
             return Libnoise.Lerp(v0, v1, alpha);
         }
 

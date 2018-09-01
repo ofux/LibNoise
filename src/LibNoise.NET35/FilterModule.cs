@@ -29,17 +29,17 @@ namespace LibNoise
         /// <summary>
         /// Default frequency for the noise module.
         /// </summary>
-        public const float DEFAULT_FREQUENCY = 1.0f;
+        public const double DEFAULT_FREQUENCY = 1.0;
 
         /// <summary>
         /// Default lacunarity for the noise module.
         /// </summary>
-        public const float DEFAULT_LACUNARITY = 2.0f;
+        public const double DEFAULT_LACUNARITY = 2.0;
 
         /// <summary>
         /// Default number of octaves for the noise module.
         /// </summary>
-        public const float DEFAULT_OCTAVE_COUNT = 6.0f;
+        public const double DEFAULT_OCTAVE_COUNT = 6.0;
 
         /// <summary>
         /// Maximum number of octaves for a noise module.
@@ -49,17 +49,17 @@ namespace LibNoise
         /// <summary>
         /// Default offset
         /// </summary>
-        public const float DEFAULT_OFFSET = 1.0f;
+        public const double DEFAULT_OFFSET = 1.0;
 
         /// <summary>
         /// Default gain
         /// </summary>
-        public const float DEFAULT_GAIN = 2.0f;
+        public const double DEFAULT_GAIN = 2.0;
 
         /// <summary>
         /// Default spectral exponent
         /// </summary>
-        public const float DEFAULT_SPECTRAL_EXPONENT = 0.9f;
+        public const double DEFAULT_SPECTRAL_EXPONENT = 0.9;
 
         #endregion
 
@@ -68,12 +68,12 @@ namespace LibNoise
         /// <summary>
         /// Frequency of the first octave
         /// </summary>
-        protected float _frequency = DEFAULT_FREQUENCY;
+        protected double _frequency = DEFAULT_FREQUENCY;
 
         /// <summary>
         /// 
         /// </summary>
-        protected float _gain = DEFAULT_GAIN;
+        protected double _gain = DEFAULT_GAIN;
 
         /// <summary>
         /// The lacunarity specifies the frequency multipler between successive
@@ -83,7 +83,7 @@ namespace LibNoise
         /// with the lacunarity value to determine the effects.  For best results,
         /// set the lacunarity to a number between 1.5 and 3.5.
         /// </summary>
-        protected float _lacunarity = DEFAULT_LACUNARITY;
+        protected double _lacunarity = DEFAULT_LACUNARITY;
 
         /// <summary>
         /// The number of octaves control the <i>amount of detail</i> of the
@@ -94,12 +94,12 @@ namespace LibNoise
         /// coherent-noise functions that are added together to form noise.
         ///
         /// </summary>
-        protected float _octaveCount = DEFAULT_OCTAVE_COUNT;
+        protected double _octaveCount = DEFAULT_OCTAVE_COUNT;
 
         /// <summary>
         /// 
         /// </summary>
-        protected float _offset = DEFAULT_OFFSET;
+        protected double _offset = DEFAULT_OFFSET;
 
         /// <summary>
         /// 
@@ -124,12 +124,12 @@ namespace LibNoise
         /// <summary>
         /// 
         /// </summary>
-        protected float _spectralExponent = DEFAULT_SPECTRAL_EXPONENT;
+        protected double _spectralExponent = DEFAULT_SPECTRAL_EXPONENT;
 
         /// <summary>
         /// 
         /// </summary>
-        protected float[] _spectralWeights = new float[MAX_OCTAVE];
+        protected double[] _spectralWeights = new double[MAX_OCTAVE];
 
         #endregion
 
@@ -138,7 +138,7 @@ namespace LibNoise
         /// <summary>
         /// Gets or sets the frequency
         /// </summary>
-        public float Frequency
+        public double Frequency
         {
             get { return _frequency; }
             set { _frequency = value; }
@@ -148,7 +148,7 @@ namespace LibNoise
         /// <summary>
         /// Gets or sets the lacunarity
         /// </summary>
-        public float Lacunarity
+        public double Lacunarity
         {
             get { return _lacunarity; }
             set
@@ -162,17 +162,17 @@ namespace LibNoise
         /// <summary>
         /// Gets or sets the number of octaves 
         /// </summary>
-        public float OctaveCount
+        public double OctaveCount
         {
             get { return _octaveCount; }
-            set { _octaveCount = Libnoise.Clamp(value, 1.0f, MAX_OCTAVE); }
+            set { _octaveCount = Libnoise.Clamp(value, 1.0, MAX_OCTAVE); }
         }
 
 
         /// <summary>
         /// Gets or sets the offset
         /// </summary>
-        public float Offset
+        public double Offset
         {
             get { return _offset; }
             set { _offset = value; }
@@ -182,7 +182,7 @@ namespace LibNoise
         /// <summary>
         /// Gets or sets the gain
         /// </summary>
-        public float Gain
+        public double Gain
         {
             get { return _gain; }
             set { _gain = value; }
@@ -192,7 +192,7 @@ namespace LibNoise
         /// <summary>
         /// Gets or sets the spectralExponent
         /// </summary>
-        public float SpectralExponent
+        public double SpectralExponent
         {
             get { return _spectralExponent; }
             set
@@ -262,7 +262,7 @@ namespace LibNoise
         /// <param name="lacunarity"></param>
         /// <param name="exponent"></param>
         /// <param name="octaveCount"></param>
-        protected FilterModule(float frequency, float lacunarity, float exponent, float octaveCount)
+        protected FilterModule(double frequency, double lacunarity, double exponent, double octaveCount)
         {
             _frequency = frequency;
             _lacunarity = lacunarity;
@@ -285,7 +285,7 @@ namespace LibNoise
             for (int i = 0; i < MAX_OCTAVE; i++)
             {
                 // determines how "heavy" is the i-th octave
-                _spectralWeights[i] = (float) Math.Pow(_lacunarity, -i*_spectralExponent);
+                _spectralWeights[i] = Math.Pow(_lacunarity, -i*_spectralExponent);
             }
 
             /*

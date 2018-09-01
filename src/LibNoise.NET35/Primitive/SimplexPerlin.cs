@@ -39,19 +39,19 @@ namespace LibNoise.Primitive
 
         /// Skewing and unskewing factors for 2D, 3D and 4D, 
         /// some of them pre-multiplied.
-        private const float F2 = 0.5f*(Libnoise.Sqrt3 - 1.0f);
+        private const double F2 = 0.5*(Libnoise.Sqrt3 - 1.0);
 
-        private const float G2 = (3.0f - Libnoise.Sqrt3)/6.0f;
-        private const float G22 = G2*2.0f - 1f;
+        private const double G2 = (3.0 - Libnoise.Sqrt3)/6.0;
+        private const double G22 = G2*2.0 - 1;
 
-        private const float F3 = 1.0f/3.0f;
-        private const float G3 = 1.0f/6.0f;
+        private const double F3 = 1.0/3.0;
+        private const double G3 = 1.0/6.0;
 
-        private const float F4 = (Libnoise.Sqrt5 - 1.0f)/4.0f;
-        private const float G4 = (5.0f - Libnoise.Sqrt5)/20.0f;
-        private const float G42 = G4*2.0f;
-        private const float G43 = G4*3.0f;
-        private const float G44 = G4*4.0f - 1.0f;
+        private const double F4 = (Libnoise.Sqrt5 - 1.0)/4.0;
+        private const double G4 = (5.0 - Libnoise.Sqrt5)/20.0;
+        private const double G42 = G4*2.0;
+        private const double G43 = G4*3.0;
+        private const double G44 = G4*4.0 - 1.0;
 
         /// <summary>
         /// Gradient vectors for 3D (pointing to mid points of all edges of a unit
@@ -135,22 +135,22 @@ namespace LibNoise.Primitive
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public new float GetValue(float x, float y)
+        public new double GetValue(double x, double y)
         {
             // Noise contributions from the three corners
-            float n0 = 0, n1 = 0, n2 = 0;
+            double n0 = 0, n1 = 0, n2 = 0;
 
             // Skew the input space to determine which simplex cell we're in
-            float s = (x + y)*F2; // Hairy factor for 2D
+            double s = (x + y)*F2; // Hairy factor for 2D
 
             int i = Libnoise.FastFloor(x + s);
             int j = Libnoise.FastFloor(y + s);
 
-            float t = (i + j)*G2;
+            double t = (i + j)*G2;
 
             // The x,y distances from the cell origin
-            float x0 = x - (i - t);
-            float y0 = y - (j - t);
+            double x0 = x - (i - t);
+            double y0 = y - (j - t);
 
             // For the 2D case, the simplex shape is an equilateral triangle.
             // Determine which simplex we are in.
@@ -174,17 +174,17 @@ namespace LibNoise.Primitive
             // A step of (1,0) in (i,j) means a step of (1-c,-c) in (x,y), and
             // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
             // c = (3-sqrt(3))/6
-            float x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed
-            float y1 = y0 - j1 + G2;
-            float x2 = x0 + G22; // Offsets for last corner in (x,y) unskewed
-            float y2 = y0 + G22;
+            double x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed
+            double y1 = y0 - j1 + G2;
+            double x2 = x0 + G22; // Offsets for last corner in (x,y) unskewed
+            double y2 = y0 + G22;
 
             // Work out the hashed gradient indices of the three simplex corners
             int ii = i & 0xff;
             int jj = j & 0xff;
 
             // Calculate the contribution from the three corners
-            float t0 = 0.5f - x0*x0 - y0*y0;
+            double t0 = 0.5 - x0*x0 - y0*y0;
 
             if (t0 > 0)
             {
@@ -194,7 +194,7 @@ namespace LibNoise.Primitive
                 // 2D gradient
             }
 
-            float t1 = 0.5f - x1*x1 - y1*y1;
+            double t1 = 0.5 - x1*x1 - y1*y1;
 
             if (t1 > 0)
             {
@@ -203,7 +203,7 @@ namespace LibNoise.Primitive
                 n1 = t1*t1*Dot(Grad3[gi1], x1, y1);
             }
 
-            float t2 = 0.5f - x2*x2 - y2*y2;
+            double t2 = 0.5 - x2*x2 - y2*y2;
             if (t2 > 0)
             {
                 t2 *= t2;
@@ -213,7 +213,7 @@ namespace LibNoise.Primitive
 
             // Add contributions from each corner to get the final noise value.
             // The result is scaled to return values in the interval [-1,1].
-            return 70.0f*(n0 + n1 + n2);
+            return 70.0*(n0 + n1 + n2);
         }
 
         #endregion
@@ -227,25 +227,25 @@ namespace LibNoise.Primitive
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public new float GetValue(float x, float y, float z)
+        public new double GetValue(double x, double y, double z)
         {
-            float n0 = 0, n1 = 0, n2 = 0, n3 = 0;
+            double n0 = 0, n1 = 0, n2 = 0, n3 = 0;
 
             // Noise contributions from the four corners
             // Skew the input space to determine which simplex cell we're in
-            float s = (x + y + z)*F3;
+            double s = (x + y + z)*F3;
 
             // for 3D
             int i = Libnoise.FastFloor(x + s);
             int j = Libnoise.FastFloor(y + s);
             int k = Libnoise.FastFloor(z + s);
 
-            float t = (i + j + k)*G3;
+            double t = (i + j + k)*G3;
 
             // The x,y,z distances from the cell origin
-            float x0 = x - (i - t);
-            float y0 = y - (j - t);
-            float z0 = z - (k - t);
+            double x0 = x - (i - t);
+            double y0 = y - (j - t);
+            double z0 = z - (k - t);
 
             // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
             // Determine which simplex we are in.
@@ -330,19 +330,19 @@ namespace LibNoise.Primitive
             // where c = 1/6.
 
             // Offsets for second corner in (x,y,z) coords
-            float x1 = x0 - i1 + G3;
-            float y1 = y0 - j1 + G3;
-            float z1 = z0 - k1 + G3;
+            double x1 = x0 - i1 + G3;
+            double y1 = y0 - j1 + G3;
+            double z1 = z0 - k1 + G3;
 
             // Offsets for third corner in (x,y,z)
-            float x2 = x0 - i2 + F3;
-            float y2 = y0 - j2 + F3;
-            float z2 = z0 - k2 + F3;
+            double x2 = x0 - i2 + F3;
+            double y2 = y0 - j2 + F3;
+            double z2 = z0 - k2 + F3;
 
             // Offsets for last corner in (x,y,z)
-            float x3 = x0 - 0.5f;
-            float y3 = y0 - 0.5f;
-            float z3 = z0 - 0.5f;
+            double x3 = x0 - 0.5;
+            double y3 = y0 - 0.5;
+            double z3 = z0 - 0.5;
 
             // Work out the hashed gradient indices of the four simplex corners
             int ii = i & 0xff;
@@ -350,7 +350,7 @@ namespace LibNoise.Primitive
             int kk = k & 0xff;
 
             // Calculate the contribution from the four corners
-            float t0 = 0.6f - x0*x0 - y0*y0 - z0*z0;
+            double t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
             if (t0 > 0)
             {
                 t0 *= t0;
@@ -358,7 +358,7 @@ namespace LibNoise.Primitive
                 n0 = t0*t0*Dot(Grad3[gi0], x0, y0, z0);
             }
 
-            float t1 = 0.6f - x1*x1 - y1*y1 - z1*z1;
+            double t1 = 0.6 - x1*x1 - y1*y1 - z1*z1;
             if (t1 > 0)
             {
                 t1 *= t1;
@@ -366,7 +366,7 @@ namespace LibNoise.Primitive
                 n1 = t1*t1*Dot(Grad3[gi1], x1, y1, z1);
             }
 
-            float t2 = 0.6f - x2*x2 - y2*y2 - z2*z2;
+            double t2 = 0.6 - x2*x2 - y2*y2 - z2*z2;
             if (t2 > 0)
             {
                 t2 *= t2;
@@ -374,7 +374,7 @@ namespace LibNoise.Primitive
                 n2 = t2*t2*Dot(Grad3[gi2], x2, y2, z2);
             }
 
-            float t3 = 0.6f - x3*x3 - y3*y3 - z3*z3;
+            double t3 = 0.6 - x3*x3 - y3*y3 - z3*z3;
             if (t3 > 0)
             {
                 t3 *= t3;
@@ -384,7 +384,7 @@ namespace LibNoise.Primitive
 
             // Add contributions from each corner to get the final noise value.
             // The result is scaled to stay just inside [-1,1]
-            return 32.0f*(n0 + n1 + n2 + n3);
+            return 32.0*(n0 + n1 + n2 + n3);
         }
 
         #endregion
@@ -399,28 +399,28 @@ namespace LibNoise.Primitive
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <param name="w">The input coordinate on the w-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z, float w)
+        public double GetValue(double x, double y, double z, double w)
         {
             // The skewing and unskewing factors are hairy again for the 4D case
             // Noise contributions
-            float n0 = 0, n1 = 0, n2 = 0, n3 = 0, n4 = 0;
+            double n0 = 0, n1 = 0, n2 = 0, n3 = 0, n4 = 0;
 
             // from the five corners
             // Skew the (x,y,z,w) space to determine which cell of 24 simplices
-            float s = (x + y + z + w)*F4; // Factor for 4D skewing
+            double s = (x + y + z + w)*F4; // Factor for 4D skewing
 
             int i = Libnoise.FastFloor(x + s);
             int j = Libnoise.FastFloor(y + s);
             int k = Libnoise.FastFloor(z + s);
             int l = Libnoise.FastFloor(w + s);
 
-            float t = (i + j + k + l)*G4; // Factor for 4D unskewing
+            double t = (i + j + k + l)*G4; // Factor for 4D unskewing
 
             // The x,y,z,w distances from the cell origin
-            float x0 = x - (i - t);
-            float y0 = y - (j - t);
-            float z0 = z - (k - t);
-            float w0 = w - (l - t);
+            double x0 = x - (i - t);
+            double y0 = y - (j - t);
+            double z0 = z - (k - t);
+            double w0 = w - (l - t);
 
             // For the 4D case, the simplex is a 4D shape I won't even try to
             // describe.
@@ -481,25 +481,25 @@ namespace LibNoise.Primitive
             l3 = sc[3] >= 1 ? 1 : 0;
 
             // The fifth corner has all coordinate offsets = 1, so no need to look that up.
-            float x1 = x0 - i1 + G4; // Offsets for second corner in (x,y,z,w)
-            float y1 = y0 - j1 + G4;
-            float z1 = z0 - k1 + G4;
-            float w1 = w0 - l1 + G4;
+            double x1 = x0 - i1 + G4; // Offsets for second corner in (x,y,z,w)
+            double y1 = y0 - j1 + G4;
+            double z1 = z0 - k1 + G4;
+            double w1 = w0 - l1 + G4;
 
-            float x2 = x0 - i2 + G42; // Offsets for third corner in (x,y,z,w)
-            float y2 = y0 - j2 + G42;
-            float z2 = z0 - k2 + G42;
-            float w2 = w0 - l2 + G42;
+            double x2 = x0 - i2 + G42; // Offsets for third corner in (x,y,z,w)
+            double y2 = y0 - j2 + G42;
+            double z2 = z0 - k2 + G42;
+            double w2 = w0 - l2 + G42;
 
-            float x3 = x0 - i3 + G43; // Offsets for fourth corner in (x,y,z,w)
-            float y3 = y0 - j3 + G43;
-            float z3 = z0 - k3 + G43;
-            float w3 = w0 - l3 + G43;
+            double x3 = x0 - i3 + G43; // Offsets for fourth corner in (x,y,z,w)
+            double y3 = y0 - j3 + G43;
+            double z3 = z0 - k3 + G43;
+            double w3 = w0 - l3 + G43;
 
-            float x4 = x0 + G44; // Offsets for last corner in (x,y,z,w)
-            float y4 = y0 + G44;
-            float z4 = z0 + G44;
-            float w4 = w0 + G44;
+            double x4 = x0 + G44; // Offsets for last corner in (x,y,z,w)
+            double y4 = y0 + G44;
+            double z4 = z0 + G44;
+            double w4 = w0 + G44;
 
             // Work out the hashed gradient indices of the five simplex corners
             int ii = i & 0xff;
@@ -508,7 +508,7 @@ namespace LibNoise.Primitive
             int ll = l & 0xff;
 
             // Calculate the contribution from the five corners
-            float t0 = 0.6f - x0*x0 - y0*y0 - z0*z0 - w0*w0;
+            double t0 = 0.6 - x0*x0 - y0*y0 - z0*z0 - w0*w0;
 
             if (t0 > 0)
             {
@@ -517,7 +517,7 @@ namespace LibNoise.Primitive
                 n0 = t0*t0*Dot(Grad4[gi0], x0, y0, z0, w0);
             }
 
-            float t1 = 0.6f - x1*x1 - y1*y1 - z1*z1 - w1*w1;
+            double t1 = 0.6 - x1*x1 - y1*y1 - z1*z1 - w1*w1;
             if (t1 > 0)
             {
                 t1 *= t1;
@@ -527,7 +527,7 @@ namespace LibNoise.Primitive
                 n1 = t1*t1*Dot(Grad4[gi1], x1, y1, z1, w1);
             }
 
-            float t2 = 0.6f - x2*x2 - y2*y2 - z2*z2 - w2*w2;
+            double t2 = 0.6 - x2*x2 - y2*y2 - z2*z2 - w2*w2;
             if (t2 > 0)
             {
                 t2 *= t2;
@@ -537,7 +537,7 @@ namespace LibNoise.Primitive
                 n2 = t2*t2*Dot(Grad4[gi2], x2, y2, z2, w2);
             }
 
-            float t3 = 0.6f - x3*x3 - y3*y3 - z3*z3 - w3*w3;
+            double t3 = 0.6 - x3*x3 - y3*y3 - z3*z3 - w3*w3;
             if (t3 > 0)
             {
                 t3 *= t3;
@@ -547,7 +547,7 @@ namespace LibNoise.Primitive
                 n3 = t3*t3*Dot(Grad4[gi3], x3, y3, z3, w3);
             }
 
-            float t4 = 0.6f - x4*x4 - y4*y4 - z4*z4 - w4*w4;
+            double t4 = 0.6 - x4*x4 - y4*y4 - z4*z4 - w4*w4;
             if (t4 > 0)
             {
                 t4 *= t4;
@@ -558,7 +558,7 @@ namespace LibNoise.Primitive
             }
 
             // Sum up and scale the result to cover the range [-1,1]
-            return 27.0f*(n0 + n1 + n2 + n3 + n4);
+            return 27.0*(n0 + n1 + n2 + n3 + n4);
         }
 
         #endregion
@@ -572,7 +572,7 @@ namespace LibNoise.Primitive
         /// <param name="z">Z coordinates.</param>
         /// <param name="t">T coordinates.</param>
         /// <returns>Dot product.</returns>
-        protected static float Dot(int[] g, float x, float y, float z, float t)
+        protected static double Dot(int[] g, double x, double y, double z, double t)
         {
             return g[0]*x + g[1]*y + g[2]*z + g[3]*t;
         }
@@ -585,7 +585,7 @@ namespace LibNoise.Primitive
         /// <param name="y">Y coordinates.</param>
         /// <param name="z">Z coordinates.</param>
         /// <returns>Dot product.</returns>
-        protected static float Dot(int[] g, float x, float y, float z)
+        protected static double Dot(int[] g, double x, double y, double z)
         {
             return g[0]*x + g[1]*y + g[2]*z;
         }
@@ -597,7 +597,7 @@ namespace LibNoise.Primitive
         /// <param name="x">X coordinates.</param>
         /// <param name="y">Y coordinates.</param>
         /// <returns>Dot product.</returns>
-        protected static float Dot(int[] g, float x, float y)
+        protected static double Dot(int[] g, double x, double y)
         {
             return g[0]*x + g[1]*y;
         }

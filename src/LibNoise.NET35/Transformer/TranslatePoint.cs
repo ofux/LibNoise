@@ -34,17 +34,17 @@ namespace LibNoise.Transformer
         /// <summary>
         /// The default translation amount to apply to the x coordinate
         /// </summary>
-        public const float DEFAULT_TRANSLATE_X = 1.0f;
+        public const double DEFAULT_TRANSLATE_X = 1.0;
 
         /// <summary>
         /// The default translation amount to apply to the y coordinate
         /// </summary>
-        public const float DEFAULT_TRANSLATE_Y = 1.0f;
+        public const double DEFAULT_TRANSLATE_Y = 1.0;
 
         /// <summary>
         /// The default translation amount to apply to the z coordinate
         /// </summary>
-        public const float DEFAULT_TRANSLATE_Z = 1.0f;
+        public const double DEFAULT_TRANSLATE_Z = 1.0;
 
         #endregion
 
@@ -58,17 +58,17 @@ namespace LibNoise.Transformer
         /// <summary>
         /// the translation amount to apply to the x coordinate
         /// </summary>
-        protected float _xTranslate = DEFAULT_TRANSLATE_X;
+        protected double _xTranslate = DEFAULT_TRANSLATE_X;
 
         /// <summary>
         /// the translation amount to apply to the y coordinate
         /// </summary>
-        protected float _yTranslate = DEFAULT_TRANSLATE_Y;
+        protected double _yTranslate = DEFAULT_TRANSLATE_Y;
 
         /// <summary>
         /// the translation amount to apply to the z coordinate
         /// </summary>
-        protected float _zTranslate = DEFAULT_TRANSLATE_Z;
+        protected double _zTranslate = DEFAULT_TRANSLATE_Z;
 
         #endregion
 
@@ -86,7 +86,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the translation amount to apply to the x coordinate
         /// </summary>
-        public float XTranslate
+        public double XTranslate
         {
             get { return _xTranslate; }
             set { _xTranslate = value; }
@@ -95,7 +95,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the translation amount to apply to the y coordinate
         /// </summary>
-        public float YTranslate
+        public double YTranslate
         {
             get { return _yTranslate; }
             set { _yTranslate = value; }
@@ -104,7 +104,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the translation amount to apply to the z coordinate
         /// </summary>
-        public float ZTranslate
+        public double ZTranslate
         {
             get { return _zTranslate; }
             set { _zTranslate = value; }
@@ -139,7 +139,7 @@ namespace LibNoise.Transformer
         /// <param name="x">the translation amount to apply to the x coordinate</param>
         /// <param name="y">the translation amount to apply to the y coordinate</param>
         /// <param name="z">the translation amount to apply to the z coordinate</param>
-        public TranslatePoint(IModule source, float x, float y, float z)
+        public TranslatePoint(IModule source, double x, double y, double z)
             : this(source)
         {
             _xTranslate = x;
@@ -158,7 +158,7 @@ namespace LibNoise.Transformer
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             return ((IModule3D) _sourceModule).GetValue(x + _xTranslate, y + _yTranslate, z + _zTranslate);
         }

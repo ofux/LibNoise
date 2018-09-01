@@ -31,7 +31,7 @@ namespace LibNoise
         /// </summary>
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <returns>The resulting output value.</returns>
-        float GetValue(float x);
+        double GetValue(double x);
 
         #endregion
     }

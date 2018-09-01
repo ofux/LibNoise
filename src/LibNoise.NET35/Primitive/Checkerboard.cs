@@ -42,14 +42,14 @@ namespace LibNoise.Primitive
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Fast floor
             int ix = (x > 0.0 ? (int) x : (int) x - 1);
             int iy = (y > 0.0 ? (int) y : (int) y - 1);
             int iz = (z > 0.0 ? (int) z : (int) z - 1);
 
-            return (ix & 1 ^ iy & 1 ^ iz & 1) != 0 ? -1.0f : 1.0f;
+            return (ix & 1 ^ iy & 1 ^ iz & 1) != 0 ? -1.0 : 1.0;
         }
 
         #endregion

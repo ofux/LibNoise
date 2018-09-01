@@ -41,17 +41,17 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Default x rotation angle for the RotatePoint noise module.
         /// </summary>
-        public const float DefaultRotateX = 0.0f;
+        public const double DefaultRotateX = 0.0;
 
         /// <summary>
         /// Default y rotation angle for the RotatePoint noise module.
         /// </summary>
-        public const float DefaultRotateY = 0.0f;
+        public const double DefaultRotateY = 0.0;
 
         /// <summary>
         /// Default z rotation angle for the RotatePoint noise module.
         /// </summary>
-        public const float DefaultRotateZ = 0.0f;
+        public const double DefaultRotateZ = 0.0;
 
         #endregion
 
@@ -66,70 +66,70 @@ namespace LibNoise.Transformer
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _x1Matrix;
+        private double _x1Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _x2Matrix;
+        private double _x2Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _x3Matrix;
+        private double _x3Matrix;
 
         /// <summary>
         /// x rotation angle applied to the input value, in degrees.
         /// </summary>
-        private float _xAngle;
+        private double _xAngle;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _y1Matrix;
+        private double _y1Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _y2Matrix;
+        private double _y2Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _y3Matrix;
+        private double _y3Matrix;
 
         /// <summary>
         /// y rotation angle applied to the input value, in degrees.
         /// </summary>
-        private float _yAngle;
+        private double _yAngle;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _z1Matrix;
+        private double _z1Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _z2Matrix;
+        private double _z2Matrix;
 
         /// <summary>
         /// An entry within the 3x3 rotation matrix used for rotating the
         /// input value.
         /// </summary>
-        private float _z3Matrix;
+        private double _z3Matrix;
 
         /// <summary>
         /// z rotation angle applied to the input value, in degrees.
         /// </summary>
-        private float _zAngle;
+        private double _zAngle;
 
         #endregion
 
@@ -147,7 +147,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the x rotation angle applied to the input value, in degrees.
         /// </summary>
-        public float XAngle
+        public double XAngle
         {
             get { return _xAngle; }
             set { SetAngles(value, _yAngle, _zAngle); }
@@ -156,7 +156,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the y rotation angle applied to the input value, in degrees.
         /// </summary>
-        public float YAngle
+        public double YAngle
         {
             get { return _yAngle; }
             set { SetAngles(_xAngle, value, _zAngle); }
@@ -165,7 +165,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Gets or sets the z rotation angle applied to the input value, in degrees.
         /// </summary>
-        public float ZAngle
+        public double ZAngle
         {
             get { return _zAngle; }
             set { SetAngles(_xAngle, _yAngle, value); }
@@ -198,7 +198,7 @@ namespace LibNoise.Transformer
         /// <param name="xAngle">the x rotation angle applied to the input value, in degrees.</param>
         /// <param name="yAngle">the y rotation angle applied to the input value, in degrees.</param>
         /// <param name="zAngle">the z rotation angle applied to the input value, in degrees.</param>
-        public RotatePoint(IModule source, float xAngle, float yAngle, float zAngle)
+        public RotatePoint(IModule source, double xAngle, double yAngle, double zAngle)
         {
             _sourceModule = source;
             SetAngles(xAngle, yAngle, zAngle);
@@ -215,16 +215,16 @@ namespace LibNoise.Transformer
         /// <param name="xAngle">the x rotation angle applied to the input value, in degrees.</param>
         /// <param name="yAngle">the y rotation angle applied to the input value, in degrees.</param>
         /// <param name="zAngle">the z rotation angle applied to the input value, in degrees.</param>
-        public void SetAngles(float xAngle, float yAngle, float zAngle)
+        public void SetAngles(double xAngle, double yAngle, double zAngle)
         {
-            float xCos, yCos, zCos, xSin, ySin, zSin;
+            double xCos, yCos, zCos, xSin, ySin, zSin;
 
-            xCos = (float) Math.Cos(xAngle*Libnoise.Deg2Rad);
-            yCos = (float) Math.Cos(yAngle*Libnoise.Deg2Rad);
-            zCos = (float) Math.Cos(zAngle*Libnoise.Deg2Rad);
-            xSin = (float) Math.Sin(xAngle*Libnoise.Deg2Rad);
-            ySin = (float) Math.Sin(yAngle*Libnoise.Deg2Rad);
-            zSin = (float) Math.Sin(zAngle*Libnoise.Deg2Rad);
+            xCos = Math.Cos(xAngle*Libnoise.Deg2Rad);
+            yCos = Math.Cos(yAngle*Libnoise.Deg2Rad);
+            zCos = Math.Cos(zAngle*Libnoise.Deg2Rad);
+            xSin = Math.Sin(xAngle*Libnoise.Deg2Rad);
+            ySin = Math.Sin(yAngle*Libnoise.Deg2Rad);
+            zSin = Math.Sin(zAngle*Libnoise.Deg2Rad);
 
             _x1Matrix = ySin*xSin*zSin + yCos*zCos;
             _y1Matrix = xCos*zSin;
@@ -254,11 +254,11 @@ namespace LibNoise.Transformer
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float nx = (_x1Matrix*x) + (_y1Matrix*y) + (_z1Matrix*z);
-            float ny = (_x2Matrix*x) + (_y2Matrix*y) + (_z2Matrix*z);
-            float nz = (_x3Matrix*x) + (_y3Matrix*y) + (_z3Matrix*z);
+            double nx = (_x1Matrix*x) + (_y1Matrix*y) + (_z1Matrix*z);
+            double ny = (_x2Matrix*x) + (_y2Matrix*y) + (_z2Matrix*z);
+            double nz = (_x3Matrix*x) + (_y3Matrix*y) + (_z3Matrix*z);
 
             return ((IModule3D) _sourceModule).GetValue(nx, ny, nz);
         }

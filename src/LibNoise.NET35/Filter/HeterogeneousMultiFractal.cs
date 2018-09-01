@@ -47,16 +47,16 @@ namespace LibNoise.Filter
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
-            float signal;
+            double signal;
             int curOctave;
 
             x *= _frequency;
             y *= _frequency;
 
             // Initialize value : first unscaled octave of function; later octaves are scaled 
-            float value = _offset + _source2D.GetValue(x, y);
+            double value = _offset + _source2D.GetValue(x, y);
 
             x *= _lacunarity;
             y *= _lacunarity;
@@ -82,9 +82,9 @@ namespace LibNoise.Filter
             }
 
             //take care of remainder in _octaveCount
-            float remainder = _octaveCount - (int) _octaveCount;
+            double remainder = _octaveCount - (int) _octaveCount;
 
-            if (remainder > 0.0f)
+            if (remainder > 0.0)
             {
                 signal = _offset + _source2D.GetValue(x, y);
                 signal *= _spectralWeights[curOctave];
@@ -107,9 +107,9 @@ namespace LibNoise.Filter
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
-            float signal;
+            double signal;
             int curOctave;
 
             x *= _frequency;
@@ -117,7 +117,7 @@ namespace LibNoise.Filter
             z *= _frequency;
 
             // Initialize value : first unscaled octave of function; later octaves are scaled 
-            float value = _offset + _source3D.GetValue(x, y, z);
+            double value = _offset + _source3D.GetValue(x, y, z);
 
             x *= _lacunarity;
             y *= _lacunarity;
@@ -145,9 +145,9 @@ namespace LibNoise.Filter
             }
 
             //take care of remainder in _octaveCount
-            float remainder = _octaveCount - (int) _octaveCount;
+            double remainder = _octaveCount - (int) _octaveCount;
 
-            if (remainder > 0.0f)
+            if (remainder > 0.0)
             {
                 signal = _offset + _source3D.GetValue(x, y, z);
                 signal *= _spectralWeights[curOctave];

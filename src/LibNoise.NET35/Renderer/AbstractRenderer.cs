@@ -42,7 +42,7 @@ namespace LibNoise.Renderer
         /// <summary>
         /// The source noise map that contains the coherent-noise values.
         /// </summary>
-        protected IMap2D<float> _noiseMap;
+        protected IMap2D<double> _noiseMap;
 
         #endregion
 
@@ -51,7 +51,7 @@ namespace LibNoise.Renderer
         /// <summary>
         /// Gets or sets the source noise map
         /// </summary>
-        public IMap2D<float> NoiseMap
+        public IMap2D<double> NoiseMap
         {
             get { return _noiseMap; }
             set { _noiseMap = value; }

@@ -70,11 +70,11 @@ namespace LibNoise.Model
         /// <param name="angle">The angle around the cylinder's center, in degrees.</param>
         /// <param name="height">The height along the y axis.</param>
         /// <returns>The output value from the noise module.</returns>
-        public float GetValue(float angle, float height)
+        public double GetValue(double angle, double height)
         {
-            var x = (float) Math.Cos(angle*Libnoise.Deg2Rad);
-            float y = height;
-            var z = (float) Math.Sin(angle*Libnoise.Deg2Rad);
+            var x = Math.Cos(angle*Libnoise.Deg2Rad);
+            double y = height;
+            var z = Math.Sin(angle*Libnoise.Deg2Rad);
 
             return ((IModule3D) PSourceModule).GetValue(x, y, z);
         }

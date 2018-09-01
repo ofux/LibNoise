@@ -58,9 +58,9 @@ namespace LibNoise.Filter
         /// </summary>
         public RidgedMultiFractal()
         {
-            _gain = 2.0f;
-            _offset = 1.0f;
-            _spectralExponent = 0.9f;
+            _gain = 2.0;
+            _offset = 1.0;
+            _spectralExponent = 0.9;
 
             ComputeSpectralWeights();
         }
@@ -75,7 +75,7 @@ namespace LibNoise.Filter
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
             int curOctave;
 
@@ -83,10 +83,10 @@ namespace LibNoise.Filter
             y *= _frequency;
 
             // Initialize value : 1st octave
-            float signal = _source2D.GetValue(x, y);
+            double signal = _source2D.GetValue(x, y);
 
             // get absolute value of signal (this creates the ridges)
-            if (signal < 0.0f)
+            if (signal < 0.0)
                 signal = -signal;
 
             // invert and translate (note that "offset" should be ~= 1.0)
@@ -96,9 +96,9 @@ namespace LibNoise.Filter
             signal *= signal;
 
             // Add the signal to the output value.
-            float value = signal;
+            double value = signal;
 
-            float weight = 1.0f;
+            double weight = 1.0;
 
             for (curOctave = 1; weight > 0.001 && curOctave < _octaveCount; curOctave++)
             {
@@ -143,7 +143,7 @@ namespace LibNoise.Filter
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             int curOctave;
 
@@ -152,7 +152,7 @@ namespace LibNoise.Filter
             z *= _frequency;
 
             // Initialize value : 1st octave
-            float signal = _source3D.GetValue(x, y, z);
+            double signal = _source3D.GetValue(x, y, z);
 
             // get absolute value of signal (this creates the ridges)
             if (signal < 0.0)
@@ -165,9 +165,9 @@ namespace LibNoise.Filter
             signal *= signal;
 
             // Add the signal to the output value.
-            float value = signal;
+            double value = signal;
 
-            float weight = 1.0f;
+            double weight = 1.0;
 
             for (curOctave = 1; weight > 0.001 && curOctave < _octaveCount; curOctave++)
             {
@@ -182,7 +182,7 @@ namespace LibNoise.Filter
                 signal = _source3D.GetValue(x, y, z);
 
                 // Make the ridges.
-                if (signal < 0.0f)
+                if (signal < 0.0)
                     signal = -signal;
 
                 signal = _offset - signal;

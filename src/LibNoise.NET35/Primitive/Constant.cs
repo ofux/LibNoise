@@ -30,7 +30,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// 
         /// </summary>
-        public const float DEFAULT_VALUE = 0.5f;
+        public const double DEFAULT_VALUE = 0.5;
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// 
         /// </summary>
-        protected float _constant = DEFAULT_VALUE;
+        protected double _constant = DEFAULT_VALUE;
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// the constant output value for this noise module.
         /// </summary>
-        public float ConstantValue
+        public double ConstantValue
         {
             get { return _constant; }
             set { _constant = value; }
@@ -71,7 +71,7 @@ namespace LibNoise.Primitive
         /// Create a new noise module width given value 
         /// </summary>
         /// <param name="value">The value to use</param>
-        public Constant(float value)
+        public Constant(double value)
         {
             _constant = value;
         }
@@ -85,7 +85,7 @@ namespace LibNoise.Primitive
         /// </summary>
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x)
+        public double GetValue(double x)
         {
             return _constant;
         }
@@ -100,7 +100,7 @@ namespace LibNoise.Primitive
         /// <param name="x">The input coordinate on the x-axis.</param>
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y)
+        public double GetValue(double x, double y)
         {
             return _constant;
         }
@@ -116,7 +116,7 @@ namespace LibNoise.Primitive
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             return _constant;
         }
@@ -133,7 +133,7 @@ namespace LibNoise.Primitive
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <param name="t">The input coordinate on the t-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z, float t)
+        public double GetValue(double x, double y, double z, double t)
         {
             return _constant;
         }

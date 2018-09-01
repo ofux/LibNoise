@@ -77,7 +77,7 @@ namespace LibNoise.Renderer
         /// <param name="y"></param>
         /// <param name="source"></param>
         /// <param name="boundDiff"></param>
-        protected override void RenderHeight(int x, int y, float source, float boundDiff)
+        protected override void RenderHeight(int x, int y, double source, double boundDiff)
         {
             byte elevation;
 
@@ -86,7 +86,7 @@ namespace LibNoise.Renderer
             else if (source >= _upperHeightBound)
                 elevation = byte.MaxValue;
             else
-                elevation = (byte) (((source - _lowerHeightBound)/boundDiff)*255.0f);
+                elevation = (byte) (((source - _lowerHeightBound)/boundDiff)*255.0);
 
             _heightmap.SetValue(x, y, elevation);
         }

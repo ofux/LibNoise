@@ -50,7 +50,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// Frequency of the concentric spheres.
         /// </summary>
-        public const float DEFAULT_FREQUENCY = 1.0f;
+        public const double DEFAULT_FREQUENCY = 1.0;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// Frequency of the concentric cylinders.
         /// </summary>
-        protected float _frequency = DEFAULT_FREQUENCY;
+        protected double _frequency = DEFAULT_FREQUENCY;
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace LibNoise.Primitive
         /// <summary>
         /// Gets or sets the frequency
         /// </summary>
-        public float Frequency
+        public double Frequency
         {
             get { return _frequency; }
             set { _frequency = value; }
@@ -91,7 +91,7 @@ namespace LibNoise.Primitive
         /// Create a new Cylinders generator with given values
         /// </summary>
         /// <param name="frequency"></param>
-        public Cylinders(float frequency)
+        public Cylinders(double frequency)
         {
             _frequency = frequency;
         }
@@ -107,16 +107,16 @@ namespace LibNoise.Primitive
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             x *= _frequency;
             z *= _frequency;
 
-            var distFromCenter = (float) Math.Sqrt(x*x + z*z);
-            float distFromSmallerSphere = distFromCenter - (float) Math.Floor(distFromCenter);
-            float distFromLargerSphere = 1.0f - distFromSmallerSphere;
-            float nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
-            return 1.0f - (nearestDist*4.0f); // Puts it in the -1.0 to +1.0 range.
+            var distFromCenter = Math.Sqrt(x*x + z*z);
+            double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+            double distFromLargerSphere = 1.0 - distFromSmallerSphere;
+            double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+            return 1.0 - (nearestDist*4.0); // Puts it in the -1.0 to +1.0 range.
         }
 
         #endregion

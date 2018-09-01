@@ -53,7 +53,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// Default power for the Turbulence noise module
         /// </summary>
-        public const float DEFAULT_POWER = 1.0f;
+        public const double DEFAULT_POWER = 1.0;
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace LibNoise.Transformer
         /// <summary>
         /// The power (scale) of the displacement.
         /// </summary>
-        protected float _power = DEFAULT_POWER;
+        protected double _power = DEFAULT_POWER;
 
         /// <summary>
         /// The source input module
@@ -130,7 +130,7 @@ namespace LibNoise.Transformer
         /// The power of the turbulence determines the scaling factor that is
         /// applied to the displacement amount.
         /// </summary>
-        public float Power
+        public double Power
         {
             get { return _power; }
             set { _power = value; }
@@ -168,7 +168,7 @@ namespace LibNoise.Transformer
         /// <param name="zDistortModule">the noise module that displaces the z coordinate</param>
         /// <param name="power">the power of the turbulence</param>
         public Turbulence(IModule source, IModule xDistortModule, IModule yDistortModule, IModule zDistortModule,
-            float power)
+            double power)
         {
             _sourceModule = source;
 
@@ -190,7 +190,7 @@ namespace LibNoise.Transformer
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             // Get the values from the three Perlin noise modules and
             // add each value to each coordinate of the input value.  There are also
@@ -199,25 +199,25 @@ namespace LibNoise.Transformer
             // when multiplied by the frequency, are near an integer boundary.  This is
             // due to a property of gradient coherent noise, which returns zero at
             // integer boundaries.
-            float x0, y0, z0;
-            float x1, y1, z1;
-            float x2, y2, z2;
+            double x0, y0, z0;
+            double x1, y1, z1;
+            double x2, y2, z2;
 
-            x0 = x + (12414.0f/65536.0f);
-            y0 = y + (65124.0f/65536.0f);
-            z0 = z + (31337.0f/65536.0f);
+            x0 = x + (12414.0/65536.0);
+            y0 = y + (65124.0/65536.0);
+            z0 = z + (31337.0/65536.0);
 
-            x1 = x + (26519.0f/65536.0f);
-            y1 = y + (18128.0f/65536.0f);
-            z1 = z + (60493.0f/65536.0f);
+            x1 = x + (26519.0/65536.0);
+            y1 = y + (18128.0/65536.0);
+            z1 = z + (60493.0/65536.0);
 
-            x2 = x + (53820.0f/65536.0f);
-            y2 = y + (11213.0f/65536.0f);
-            z2 = z + (44845.0f/65536.0f);
+            x2 = x + (53820.0/65536.0);
+            y2 = y + (11213.0/65536.0);
+            z2 = z + (44845.0/65536.0);
 
-            float xDistort = x + (((IModule3D) _xDistortModule).GetValue(x0, y0, z0)*_power);
-            float yDistort = y + (((IModule3D) _yDistortModule).GetValue(x1, y1, z1)*_power);
-            float zDistort = z + (((IModule3D) _zDistortModule).GetValue(x2, y2, z2)*_power);
+            double xDistort = x + (((IModule3D) _xDistortModule).GetValue(x0, y0, z0)*_power);
+            double yDistort = y + (((IModule3D) _yDistortModule).GetValue(x1, y1, z1)*_power);
+            double zDistort = z + (((IModule3D) _zDistortModule).GetValue(x2, y2, z2)*_power);
 
             // Retrieve the output value at the offsetted input value instead of the
             // original input value.

@@ -47,7 +47,7 @@ namespace LibNoise.Modifier
         /// <summary>
         /// The cached output value at the cached input value.
         /// </summary>
-        protected float _cachedValue = 0.0f;
+        protected double _cachedValue = 0.0;
 
         /// <summary>
         /// Determines if a cached output value is stored in this noise
@@ -58,17 +58,17 @@ namespace LibNoise.Modifier
         /// <summary>
         /// x coordinate of the cached input value.
         /// </summary>
-        protected float _xCache = 0.0f;
+        protected double _xCache = 0.0;
 
         /// <summary>
         /// y coordinate of the cached input value.
         /// </summary>
-        protected float _yCache = 0.0f;
+        protected double _yCache = 0.0;
 
         /// <summary>
         /// z coordinate of the cached input value.
         /// </summary>
-        protected float _zCache = 0.0f;
+        protected double _zCache = 0.0;
 
         #endregion
 
@@ -112,7 +112,7 @@ namespace LibNoise.Modifier
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             //original code
             //if(!(_isCached && x == _xCache && y == _yCache && z == _zCache)){ // Original condition

@@ -81,11 +81,11 @@ namespace LibNoise.Demo
 
             // Parse input ------------------------------------------------------------------------------------
             int seed = ParseInt(_tbxSeed.Text, PrimitiveModule.DefaultSeed);
-            float frequency = ParseFloat(_tbxFrequency.Text, FilterModule.DEFAULT_FREQUENCY);
-            float lacunarity = ParseFloat(_tbxLacunarity.Text, FilterModule.DEFAULT_LACUNARITY);
-            float gain = ParseFloat(_tbxGain.Text, FilterModule.DEFAULT_GAIN);
-            float offset = ParseFloat(_tbxOffset.Text, FilterModule.DEFAULT_OFFSET);
-            float exponent = ParseFloat(_tbxExponent.Text, FilterModule.DEFAULT_SPECTRAL_EXPONENT);
+            double frequency = ParseDouble(_tbxFrequency.Text, FilterModule.DEFAULT_FREQUENCY);
+            double lacunarity = ParseDouble(_tbxLacunarity.Text, FilterModule.DEFAULT_LACUNARITY);
+            double gain = ParseDouble(_tbxGain.Text, FilterModule.DEFAULT_GAIN);
+            double offset = ParseDouble(_tbxOffset.Text, FilterModule.DEFAULT_OFFSET);
+            double exponent = ParseDouble(_tbxExponent.Text, FilterModule.DEFAULT_SPECTRAL_EXPONENT);
             var octaveCount = (int) _nstpOctave.Value;
             bool seamless = _chkbx.Checked;
 
@@ -219,31 +219,31 @@ namespace LibNoise.Demo
                 case NoiseFilter.MultiFractal:
                     fModule = new MultiFractal();
                     // Used to show the difference with our gradient color (-1 + 1)
-                    scale = new ScaleBias(fModule, 1f, -0.8f);
+                    scale = new ScaleBias(fModule, 1, -0.8);
                     break;
 
                 case NoiseFilter.Billow:
                     fModule = new Billow();
-                    ((Billow) fModule).Bias = -0.2f;
-                    ((Billow) fModule).Scale = 2f;
+                    ((Billow) fModule).Bias = -0.2;
+                    ((Billow) fModule).Scale = 2;
                     break;
 
                 case NoiseFilter.HeterogeneousMultiFractal:
                     fModule = new HeterogeneousMultiFractal();
                     // Used to show the difference with our gradient color (-1 + 1)
-                    scale = new ScaleBias(fModule, -1f, 2f);
+                    scale = new ScaleBias(fModule, -1, 2);
                     break;
 
                 case NoiseFilter.HybridMultiFractal:
                     fModule = new HybridMultiFractal();
                     // Used to show the difference with our gradient color (-1 + 1)
-                    scale = new ScaleBias(fModule, 0.7f, -2f);
+                    scale = new ScaleBias(fModule, 0.7, -2);
                     break;
 
                 case NoiseFilter.RidgedMultiFractal:
                     fModule = new RidgedMultiFractal();
                     // Used to show the difference with our gradient color (-1 + 1)
-                    scale = new ScaleBias(fModule, 0.9f, -1.25f);
+                    scale = new ScaleBias(fModule, 0.9, -1.25);
                     break;
 
                 case NoiseFilter.Voronoi:
@@ -272,17 +272,17 @@ namespace LibNoise.Demo
             {
                 case "Spherical":
                     projection = new NoiseMapBuilderSphere();
-                    ((NoiseMapBuilderSphere) projection).SetBounds(-90f, 90f, -180f, 180f); // degrees
+                    ((NoiseMapBuilderSphere) projection).SetBounds(-90, 90, -180, 180); // degrees
                     break;
 
                 case "Cylindrical":
                     projection = new NoiseMapBuilderCylinder();
-                    ((NoiseMapBuilderCylinder) projection).SetBounds(-180f, 180f, -10f, 10f);
+                    ((NoiseMapBuilderCylinder) projection).SetBounds(-180, 180, -10, 10);
                     break;
 
                 case "Planar":
                 default:
-                    float bound = 2f;
+                    double bound = 2;
                     projection = new NoiseMapBuilderPlane(bound, bound*2, bound, bound*2, seamless);
                     //projection = new NoiseMapBuilderPlane(-bound, bound, -bound, bound, seamless);
                     //projection = new NoiseMapBuilderPlane(0, bound, 0, bound, seamless);
@@ -459,7 +459,7 @@ namespace LibNoise.Demo
 			BitmapAdaptater nmapAdaptater = new BitmapAdaptater(width, height);
 			NormalMapRenderer nmap = new NormalMapRenderer();
 			nmap.Image = nmapAdaptater;
-			nmap.BumpHeight = 30.0f;
+			nmap.BumpHeight = 30.0;
 			nmap.NoiseMap = noiseMap;
 			nmap.Render();
 			nmapAdaptater.Bitmap.Save("normalMap.png", ImageFormat.Png);
@@ -595,13 +595,13 @@ namespace LibNoise.Demo
         /// <param name="value"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        protected float ParseFloat(string value, float defaultValue)
+        protected double ParseDouble(string value, double defaultValue)
         {
             value = value.Replace(',', '.');
 
             try
             {
-                return Single.Parse(
+                return Double.Parse(
                     value,
                     NumberStyles.Number,
                     new CultureInfo("en-US", false).NumberFormat
@@ -663,10 +663,10 @@ namespace LibNoise.Demo
         /// <param name="e"></param>
         /// <param name="minRange"></param>
         /// <param name="maxRange"></param>
-        protected void TextFilterNumeric_keyPress(TextBox sender, KeyPressEventArgs e, float minRange, float maxRange)
+        protected void TextFilterNumeric_keyPress(TextBox sender, KeyPressEventArgs e, double minRange, double maxRange)
         {
             String allowed = "0123456789.,";
-            float value;
+            double value;
 
             try
             {
@@ -680,7 +680,7 @@ namespace LibNoise.Demo
                     string after = sender.Text.Substring(before.Length);
                     string newText = string.Concat(before, e.KeyChar, after);
 
-                    value = Single.Parse(
+                    value = Double.Parse(
                         newText,
                         NumberStyles.Number,
                         new CultureInfo("en-US", false).NumberFormat
@@ -714,27 +714,27 @@ namespace LibNoise.Demo
 
         private void _tbxFrequency_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextFilterNumeric_keyPress((TextBox) sender, e, 0f, 10.0f);
+            TextFilterNumeric_keyPress((TextBox) sender, e, 0, 10.0);
         }
 
         private void _tbxLacunarity_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextFilterNumeric_keyPress((TextBox) sender, e, 0f, 10.0f);
+            TextFilterNumeric_keyPress((TextBox) sender, e, 0, 10.0);
         }
 
         private void _tbxGain_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextFilterNumeric_keyPress((TextBox) sender, e, 0f, 10.0f);
+            TextFilterNumeric_keyPress((TextBox) sender, e, 0, 10.0);
         }
 
         private void _tbxOffset_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextFilterNumeric_keyPress((TextBox) sender, e, 0f, 10.0f);
+            TextFilterNumeric_keyPress((TextBox) sender, e, 0, 10.0);
         }
 
         private void _tbxExponent_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextFilterNumeric_keyPress((TextBox) sender, e, 0f, 10.0f);
+            TextFilterNumeric_keyPress((TextBox) sender, e, 0, 10.0);
         }
 
         private void _btnStart_Click(object sender, EventArgs e)

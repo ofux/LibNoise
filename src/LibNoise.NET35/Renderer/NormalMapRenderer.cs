@@ -43,7 +43,7 @@ namespace LibNoise.Renderer
     ///
     /// To render the image containing the normal map, perform the following
     /// steps:
-    /// - Pass a IMap2D<float> object to the NoiseMap property.
+    /// - Pass a IMap2D<double> object to the NoiseMap property.
     /// - Pass an IMap2D<Color> object to the Image property.
     /// - Call the Render() method.
     /// </summary>
@@ -74,7 +74,7 @@ namespace LibNoise.Renderer
         /// The spatial resolution and elevation resolution are determined by
         /// the application.
         /// </summary>
-        protected float _bumpHeight;
+        protected double _bumpHeight;
 
         #endregion
 
@@ -102,7 +102,7 @@ namespace LibNoise.Renderer
         /// <summary>
         /// Gets or Sets the bump height
         /// </summary>
-        public float BumpHeight
+        public double BumpHeight
         {
             get { return _bumpHeight; }
             set { _bumpHeight = value; }
@@ -118,7 +118,7 @@ namespace LibNoise.Renderer
         public NormalMapRenderer()
         {
             _WrapEnabled = false;
-            _bumpHeight = 1.0f;
+            _bumpHeight = 1.0;
         }
 
         #endregion
@@ -204,9 +204,9 @@ namespace LibNoise.Renderer
 
                     // Get the noise value of the current point in the source noise map
                     // and the noise values of its right and up neighbors.
-                    float nc = _noiseMap.GetValue(x, y);
-                    float nr = _noiseMap.GetValue(x + xRightOffset, y);
-                    float nu = _noiseMap.GetValue(x, y + yUpOffset);
+                    double nc = _noiseMap.GetValue(x, y);
+                    double nr = _noiseMap.GetValue(x + xRightOffset, y);
+                    double nu = _noiseMap.GetValue(x, y + yUpOffset);
 
                     // Blend the source color, background color, and the light
                     // intensity together, then update the destination image with that
@@ -244,30 +244,30 @@ namespace LibNoise.Renderer
         /// <param name="nu">The height of the up neighbor</param>
         /// <param name="bumpHeight">The bump height</param>
         /// <returns>The normal vector represented as a color</returns>
-        private IColor CalcNormalColor(float nc, float nr, float nu, float bumpHeight)
+        private IColor CalcNormalColor(double nc, double nr, double nu, double bumpHeight)
         {
             // Calculate the surface normal.
             nc *= bumpHeight;
             nr *= bumpHeight;
             nu *= bumpHeight;
 
-            float ncr = (nc - nr);
-            float ncu = (nc - nu);
-            var d = (float) Math.Sqrt((ncu*ncu) + (ncr*ncr) + 1);
-            float vxc = (nc - nr)/d;
-            float vyc = (nc - nu)/d;
-            float vzc = 1.0f/d;
+            double ncr = (nc - nr);
+            double ncu = (nc - nu);
+            var d = Math.Sqrt((ncu*ncu) + (ncr*ncr) + 1);
+            double vxc = (nc - nr)/d;
+            double vyc = (nc - nu)/d;
+            double vzc = 1.0/d;
 
             // Map the normal range from the (-1.0 .. +1.0) range to the (0 .. 255)
             // range.
             byte xc, yc, zc;
 
-            xc = (byte) (Libnoise.FastFloor((vxc + 1.0f)*127.5f) & 0xff);
-            yc = (byte) (Libnoise.FastFloor((vyc + 1.0f)*127.5f) & 0xff);
-            zc = (byte) (Libnoise.FastFloor((vzc + 1.0f)*127.5f) & 0xff);
+            xc = (byte) (Libnoise.FastFloor((vxc + 1.0)*127.5) & 0xff);
+            yc = (byte) (Libnoise.FastFloor((vyc + 1.0)*127.5) & 0xff);
+            zc = (byte) (Libnoise.FastFloor((vzc + 1.0)*127.5) & 0xff);
 
             //
-            //zc = (byte)((int)((floor)((vzc + 1.0f) * 127.5f)) & 0xff); 
+            //zc = (byte)((int)((floor)((vzc + 1.0) * 127.5)) & 0xff); 
 
             return new Color(xc, yc, zc, 255);
         }

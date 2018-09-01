@@ -45,7 +45,7 @@ namespace LibNoise.Combiner
         /// <param name="y">The input coordinate on the y-axis.</param>
         /// <param name="z">The input coordinate on the z-axis.</param>
         /// <returns>The resulting output value.</returns>
-        public float GetValue(float x, float y, float z)
+        public double GetValue(double x, double y, double z)
         {
             return ((IModule3D) _leftModule).GetValue(x, y, z) - ((IModule3D) _rightModule).GetValue(x, y, z);
         }

@@ -43,7 +43,7 @@ namespace LibNoise.Builder
         /// <summary>
         /// Gets or sets constant value.
         /// </summary>
-        float ConstantValue { get; set; }
+        double ConstantValue { get; set; }
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace LibNoise.Builder
         /// <param name="y">The y.</param>
         /// <param name="source">The source.</param>
         /// <returns>Filtered value.</returns>
-        float FilterValue(int x, int y, float source);
+        double FilterValue(int x, int y, double source);
 
         /// <summary>Is filtered.</summary>
         /// <param name="x">The X.</param>
